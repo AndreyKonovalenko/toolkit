@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+  <h1>Text input here</h1>
+
+  <label for="text">Paste text here:</label>
+  <textarea id="textArea" name="w3review" rows="4" cols="50">
+  </textarea>
+
+  <style type="text/css">
+    p {
+      margin-top: 0em;
+      margin-bottom: 0em;
+    }
+  </style>
+
+  <button onclick="sortText()">Do it</button>
+  <h2>Present</h2>
+  <p id="present"></p>
+  <h2>Past</h2>
+  <p id="past"></p>
+
+  <script>
+    function sortText() {
+      let y = document.getElementById("textArea").value
+      let presentOutput = document.getElementById("present");
+      let pastOutput = document.getElementById("past")
+      let myArr = y.split(/\n/g);
+      const br = document.createElement("br")
+      let presentResult = ""
+      let pastResult = ""
+
+      myArr.forEach(function(element) {
+        // let outputRow = document.createElement("p")
+        //element = element.replace(/"/g, "");
+        // outputRow.innerHTML = element
+        let re = /\(/g
+
+
+        if (element.search(re) != -1) {
+          if (element != "") {
+            pastResult = pastResult + element + "<br/>"
+          }
+        }
+        else {
+          if (element != "") {
+            presentResult = presentResult + element + "<br/>"
+
+          }
+        }
+
+      })
+      presentOutput.innerHTML = presentResult
+      pastOutput.innerHTML = pastResult
+
+    }
+  </script>
+
+</body>
+
+</html>
