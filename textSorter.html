@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+  <title> Text Sorter JS </title>
+</head>
+<style type="text/css">
+  header,
+  main,
+  footer {
+    margin-left: 10%;
+  }
+</style>
+
 <body>
-
-  <h1>Text input here</h1>
-
-  <label for="text">Paste text here:</label>
-  <textarea id="textArea" name="w3review" rows="4" cols="50">
-  </textarea>
-
-  <style type="text/css">
-    p {
-      margin-top: 0em;
-      margin-bottom: 0em;
-    }
-  </style>
-
-  <button onclick="sortText()">Do it</button>
-  <h2>Present</h2>
-  <p id="present"></p>
-  <h2>Past</h2>
-  <p id="past"></p>
-
+  <header>
+    <h1>Please paste text into the text area below</h1>
+  </header>
+  <main>
+    <div class="container">
+      <textarea id="textArea" name="test" rows="10" cols="100"></textarea>
+      <div>
+        <button onclick="sortText()">Do it</button>
+        <button onclick="resetFields()">Reset</button>
+      </div>
+      <div>
+        <h2>Present</h2>
+        <p id="present"></p>
+        <h2>Past</h2>
+        <p id="past"></p>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <h5>focus!</h5>
+  </footer>
   <script>
     function sortText() {
       let y = document.getElementById("textArea").value
@@ -31,14 +43,8 @@
       const br = document.createElement("br")
       let presentResult = ""
       let pastResult = ""
-
       myArr.forEach(function(element) {
-        // let outputRow = document.createElement("p")
-        //element = element.replace(/"/g, "");
-        // outputRow.innerHTML = element
         let re = /\(/g
-
-
         if (element.search(re) != -1) {
           if (element != "") {
             pastResult = pastResult + element + "<br/>"
@@ -47,14 +53,17 @@
         else {
           if (element != "") {
             presentResult = presentResult + element + "<br/>"
-
           }
         }
-
       })
       presentOutput.innerHTML = presentResult
       pastOutput.innerHTML = pastResult
+    }
 
+    function resetFields() {
+      document.getElementById("textArea").value = ""
+      document.getElementById("present").innerHTML = ""
+      document.getElementById("past").innerHTML = ""
     }
   </script>
 
