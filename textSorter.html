@@ -2,78 +2,118 @@
 <html>
 
 <head>
+  <meta charset="utf-8">
   <title> Text Sorter JS </title>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap" rel="stylesheet">
   <style type="text/css">
-    header,
-    main,
-    footer {
-      margin-left: 10%;
+    :root {
       font-family: 'Kanit';
     }
 
-    #present,
-    #past {
-      background-color: lightgrey
+    header,
+    footer {
+      text-align: center;
+    }
+
+    .wrapper {
+      max-width: 1000px;
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+      grid-template-rows: auto;
+    }
+
+    header {
+      grid-column: 1/3;
+      grid-row: 1/2;
+    }
+
+    aside {
+      grid-column: 1/2;
+      grid-row: 2/3;
+    }
+
+    main {
+      grid-column: 2/3;
+      grid-row: 2/3;
+    }
+
+    footer {
+      grid-column: 1/3;
+      grid-row: 3/4;
+    }
+
+    textarea {
+      padding: 10px;
+      line-height: 1;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-shadow: 1px 1px 1px #999;
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>Please paste text into the text area below</h1>
-  </header>
-  <main>
-    <div class="container">
-      <textarea id="textArea" name="test" rows="10" cols="100"></textarea>
-      <div>
-        <button onclick="sortText()">Do it</button>
-        <button onclick="resetFields()">Reset</button>
+  <div class="wrapper">
+    <header>
+      <h1>paste text into the text area below</h1>
+    </header>
+    <aside>
+      <h4>Memu</h4>
+      <p>Place for future functionality addition</p>
+    </aside>
+    <main>
+      <div class="container">
+        <textarea id="inputArea" name="test" rows="10" cols="100"></textarea>
+        <div>
+          <button onclick="sortText()">Do it</button>
+          <button onclick="resetFields()">Reset</button>
+        </div>
+        <div>
+          <h2>Present</h2>
+          <textarea id="presentArea" name="test" rows="10" cols="100"></textarea>
+          <h2>Past</h2>
+          <textarea id="pastArea" name="test" rows="10" cols="100"></textarea>
+        </div>
       </div>
-      <div>
-        <h2>Present</h2>
-        <p id="present"></p>
-        <h2>Past</h2>
-        <p id="past"></p>
-      </div>
-    </div>
-  </main>
-  <footer>
-    <h5>focus!</h5>
-  </footer>
-  <script>
-    function sortText() {
-      let y = document.getElementById("textArea").value
-      let presentOutput = document.getElementById("present");
-      let pastOutput = document.getElementById("past")
-      let myArr = y.split(/\n/g);
-      const br = document.createElement("br")
-      let presentResult = ""
-      let pastResult = ""
-      myArr.forEach(function(element) {
-        let re = /\(/g
-        if (element.search(re) != -1) {
-          if (element != "") {
-            pastResult = pastResult + element + "<br/>"
-          }
-        }
-        else {
-          if (element != "") {
-            presentResult = presentResult + element + "<br/>"
-          }
-        }
-      })
-      presentOutput.innerHTML = presentResult
-      pastOutput.innerHTML = pastResult
-    }
+    </main>
+    <footer>
+      <h5>focus!</h5>
+    </footer>
 
-    function resetFields() {
-      document.getElementById("textArea").value = ""
-      document.getElementById("present").innerHTML = ""
-      document.getElementById("past").innerHTML = ""
-    }
-  </script>
+    <script>
+      function sortText() {
+        let y = document.getElementById("inputArea").value
+        let presentOutput = document.getElementById("presentArea");
+        let pastOutput = document.getElementById("pastArea")
+        let myArr = y.split(/\n/g);
+        const br = document.createElement("br")
+        let presentResult = ""
+        let pastResult = ""
+        myArr.forEach(function(element) {
+          element = element.replaceAll(/\t/g, " ")
+          let re = /\(/g
+          if (element.search(re) != -1) {
+            if (element != "") {
+              pastResult = pastResult + element + "\n"
+            }
+          }
+          else {
+            if (element != "") {
+              presentResult = presentResult + element + "\n"
+            }
+          }
+        })
+        presentOutput.innerHTML = presentResult
+        pastOutput.innerHTML = pastResult
+      }
 
+      function resetFields() {
+        document.getElementById("inputArea").value = ""
+        document.getElementById("presentArea").innerHTML = ""
+        document.getElementById("pastArea").innerHTML = ""
+      }
+    </script>
+  </div>
 </body>
 
 </html>
