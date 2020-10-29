@@ -1,0 +1,20 @@
+{
+  "name": "toolkit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm start --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreyKonovalenko/toolkit.git"
+  },
+  "author": "Andrey Konovalenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AndreyKonovalenko/toolkit/issues"
+  },
+  "homepage": "https://github.com/AndreyKonovalenko/toolkit#readme"
+}
