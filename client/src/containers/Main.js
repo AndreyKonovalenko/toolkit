@@ -1,0 +1,108 @@
+import React, {useState, useEffect} from 'react';
+import InputTextForm from '../components/InputTextForm';
+
+const Main = (props) => {
+  const [textData, setTextData] = useState('paste text data here');
+
+  const printIt = () => {
+    console.log('Hello world!');
+  };
+
+  const onSumbmitHandler = (event) => {
+    event.preventDefault();
+    console.log(`"Your text ${textData}"`);
+  };
+  const onChangeHandler = (event) => {
+    setTextData(event.target.value);
+  };
+
+  useEffect(() => {
+    console.log(textData);
+  });
+  // function sortText() {
+  //   let y = document.getElementById("inputArea").value
+  //   let presentOutput = document.getElementById("presentArea");
+  //   let pastOutput = document.getElementById("pastArea")
+  //   let myArr = y.split(/\n/g);
+  //   const br = document.createElement("br")
+  //   let presentResult = ""
+  //   let pastResult = ""
+  //   myArr.forEach(function(element) {
+  //     element = element.replaceAll(/\t/g, " ")
+  //     let re = /\(/g
+  //     if (element.search(re) != -1) {
+  //       if (element != "") {
+  //         pastResult = pastResult + element + "\n"
+  //       }
+  //     }
+  //     else {
+  //       if (element != "") {
+  //         presentResult = presentResult + element + "\n"
+  //       }
+  //     }
+  //   })
+  //   presentOutput.innerHTML = presentResult
+  //   pastOutput.innerHTML = pastResult
+
+  const data = (
+    <div>
+      <div class='wrapper'>
+        <header>
+          <h1>paste text into the text area below</h1>
+        </header>
+        <aside>
+          <h4>Memu</h4>
+          <p>Place for future functionality addition</p>
+        </aside>
+        <main>
+          <div class='container'>
+            <InputTextForm
+              value={textData}
+              onSubmit={onSumbmitHandler}
+              onChange={onChangeHandler}
+            />
+            <textarea
+              id='inputArea'
+              name='test'
+              rows='10'
+              cols='100'
+            ></textarea>
+            <div>
+              <button onClick={printIt}>Do it</button>
+              <button onClick='resetFields()'>Reset</button>
+            </div>
+            <form onSubmit={() => {}}>
+              <label>
+                Essay:
+                <textarea value='' onChange={() => {}} />
+              </label>
+              <input type='submit' value='Submit' />
+              <input type='reset' value='reset' />
+            </form>
+            <div>
+              <h2>Present</h2>
+              <textarea
+                id='presentArea'
+                name='test'
+                rows='10'
+                cols='100'
+              ></textarea>
+              <h2>Past</h2>
+              <textarea
+                id='pastArea'
+                name='test'
+                rows='10'
+                cols='100'
+              ></textarea>
+            </div>
+          </div>
+        </main>
+        <footer>
+          <h5>focus!</h5>
+        </footer>
+      </div>
+    </div>
+  );
+  return data;
+};
+export default Main;
