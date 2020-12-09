@@ -1,7 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import InputTextForm from '../components/InputTextForm';
+import {createUseStyles, useTheme} from 'react-jss';
+
+let useStyles = createUseStyles((theme) => ({
+  wrapper: {
+    background: theme.colorPrimary,
+  },
+}));
+
+//import Colors from '../constants/Colors';
 
 const Main = (props) => {
+  const theme = useTheme();
+  const classes = useStyles({...props, theme});
+
   const [textData, setTextData] = useState('paste text data here');
 
   const printIt = () => {
@@ -45,8 +57,8 @@ const Main = (props) => {
   //   pastOutput.innerHTML = pastResult
 
   const data = (
-    <div>
-      <div class='wrapper'>
+    <div className={classes.wrapper}>
+      <div>
         <header>
           <h1>paste text into the text area below</h1>
         </header>
