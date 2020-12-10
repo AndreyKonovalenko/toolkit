@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import InputTextForm from '../components/InputTextForm';
-import {createUseStyles, useTheme} from 'react-jss';
+import { createUseStyles, useTheme } from 'react-jss';
 
 let useStyles = createUseStyles((theme) => ({
-  wrapper: {
+  container: {
     background: theme.colorPrimary,
   },
 }));
@@ -12,7 +12,7 @@ let useStyles = createUseStyles((theme) => ({
 
 const Main = (props) => {
   const theme = useTheme();
-  const classes = useStyles({...props, theme});
+  const classes = useStyles({ ...props, theme });
 
   const [textData, setTextData] = useState('paste text data here');
 
@@ -57,17 +57,8 @@ const Main = (props) => {
   //   pastOutput.innerHTML = pastResult
 
   const data = (
-    <div className={classes.wrapper}>
-      <div>
-        <header>
-          <h1>paste text into the text area below</h1>
-        </header>
-        <aside>
-          <h4>Memu</h4>
-          <p>Place for future functionality addition</p>
-        </aside>
-        <main>
-          <div class='container'>
+
+    <div className={classes.container}>
             <InputTextForm
               value={textData}
               onSubmit={onSumbmitHandler}
@@ -108,12 +99,7 @@ const Main = (props) => {
               ></textarea>
             </div>
           </div>
-        </main>
-        <footer>
-          <h5>focus!</h5>
-        </footer>
-      </div>
-    </div>
+
   );
   return data;
 };
