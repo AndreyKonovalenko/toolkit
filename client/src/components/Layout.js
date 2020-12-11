@@ -5,7 +5,7 @@ const theme = {
   // color scheme
   colorPrimary: '#e38c4c',
   colorSecondary: '#f6c561',
-  colorTertiary: 'fcf1da',
+  colorTertiary: '#fcf1da',
   colorQuaternary: '#977B60',
   // grid structure
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import Main from './containers/Main';
-import Layout from './components/layout/Layout';
+import TextSorter from './pages/TextSorter';
+import Layout from './components/Layout';
 
 const App = () => {
-  const routs = <Main />;
+  const routs = <TextSorter />;
   return <Layout>{routs}</Layout>;
 };
 

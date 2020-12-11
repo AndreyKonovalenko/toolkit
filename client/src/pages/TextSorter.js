@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import InputTextForm from '../components/InputTextForm';
+import CustomTextArea from '../components/CustomTextArea';
 import { createUseStyles, useTheme } from 'react-jss';
 
 let useStyles = createUseStyles((theme) => ({
   container: {
-    background: theme.colorPrimary,
+    background: theme.colorTertiary,
   },
 }));
 
 //import Colors from '../constants/Colors';
 
-const Main = (props) => {
+const TextSorter = (props) => {
   const theme = useTheme();
   const classes = useStyles({ ...props, theme });
 
   const [textData, setTextData] = useState('paste text data here');
+  const [onClickStyle, setOnClickStyle] = useState(null)
 
   const printIt = () => {
     console.log('Hello world!');
@@ -26,8 +27,13 @@ const Main = (props) => {
   };
   const onChangeHandler = (event) => {
     setTextData(event.target.value);
+
+    console.log(event.target.value)
   };
 
+  const onFocusHander = () => {
+    setOnClickStyle({ outlineColor: theme.colorPrimary })
+  }
   useEffect(() => {
     console.log(textData);
   });
@@ -59,17 +65,14 @@ const Main = (props) => {
   const data = (
 
     <div className={classes.container}>
-            <InputTextForm
+            <CustomTextArea
               value={textData}
               onSubmit={onSumbmitHandler}
               onChange={onChangeHandler}
+              overrideStyle={onClickStyle}
+              onFocus={onFocusHander}
             />
-            <textarea
-              id='inputArea'
-              name='test'
-              rows='10'
-              cols='100'
-            ></textarea>
+
             <div>
               <button onClick={printIt}>Do it</button>
               <button onClick='resetFields()'>Reset</button>
@@ -103,4 +106,4 @@ const Main = (props) => {
   );
   return data;
 };
-export default Main;
+export default TextSorter;
