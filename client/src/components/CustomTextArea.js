@@ -23,14 +23,19 @@ const CustomTextArea = (props) => {
   const classes = useStyles({ ...props, theme });
 
   return (
-
-    <textarea className={classes.textarea} style={props.overrideStyle} value={props.value} onChange={props.onChange} onFocus={props.onFocus} rows="10" cols="100"/>
+    <textarea
+      className={classes.textarea}
+      id={props.id}
+      disabled={props.disabled}
+      style={props.overrideStyle}
+      value={props.value}
+      onChange={props.onChange}
+      onFocus={props.onFocus}
+      rows="10"
+      cols="100"
+    />
 
   );
 };
-
-// const styles = StyleSheet.create({
-
-// });
 
 export default CustomTextArea;
