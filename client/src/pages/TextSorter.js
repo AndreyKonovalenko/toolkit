@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import CustomTextArea from '../components/CustomTextArea';
-import {createUseStyles, useTheme} from 'react-jss';
+import { createUseStyles, useTheme } from 'react-jss';
 
 let useStyles = createUseStyles((theme) => ({
   container: {
@@ -10,7 +10,7 @@ let useStyles = createUseStyles((theme) => ({
 
 const TextSorter = (props) => {
   const theme = useTheme();
-  const classes = useStyles({...props, theme});
+  const classes = useStyles({ ...props, theme });
   const [textData, setTextData] = useState('');
   const [onClickStyle, setOnClickStyle] = useState(null);
   const [presentData, setPresentData] = useState('');
@@ -27,13 +27,13 @@ const TextSorter = (props) => {
   };
 
   const onFocusHander = () => {
-    setOnClickStyle({outlineColor: theme.colorPrimary});
+    setOnClickStyle({ outlineColor: theme.colorPrimary });
   };
 
   const clearFields = () => {
     setPresentData('');
     setPastData('');
-    setTextData('paste text data here');
+    setTextData('');
   };
 
   const onSaveHandler = (id) => {
@@ -47,14 +47,15 @@ const TextSorter = (props) => {
     let myArr = data.split(/\n/g);
     let presentResult = '';
     let pastResult = '';
-    myArr.forEach(function (element) {
+    myArr.forEach(function(element) {
       element = element.replaceAll(/\t/g, ' ');
       let re = /\(/g;
       if (element.search(re) !== -1) {
         if (element !== '') {
           pastResult = pastResult + element + '\n';
         }
-      } else {
+      }
+      else {
         if (element !== '') {
           presentResult = presentResult + element + '\n';
         }
