@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {createUseStyles, useTheme} from 'react-jss';
 
 let useStyles = createUseStyles((theme) => ({
@@ -6,8 +6,9 @@ let useStyles = createUseStyles((theme) => ({
     background: theme.colorTertiary,
   },
 }));
-
 const axios = require('axios');
+const baseUrl = '';
+//const baseUrl = 'https://api-ip.fssp.gov.ru/api/v1.0/'
 
 const FsspParser = (props) => {
   const theme = useTheme();
@@ -33,9 +34,9 @@ const FsspParser = (props) => {
     console.log(argString);
     const req = argString.split(' ');
     console.log(req);
+    const url = baseUrl + 'search/physical';
     axios
-      .get('/search/physical', {
-        // crossdomain: true,
+      .get(url, {
         params: {
           token: 'DTVVUTs1zL5o',
           region: req[4],
@@ -58,9 +59,10 @@ const FsspParser = (props) => {
 
   const onGetResponse = (event) => {
     event.preventDefault();
+    const url = baseUrl + '/result';
     if (task !== '') {
       axios
-        .get('/result', {
+        .get(url, {
           params: {
             token: 'DTVVUTs1zL5o',
             task: task,
@@ -69,6 +71,7 @@ const FsspParser = (props) => {
         .then((res) => {
           const data = res.data.response.result[0].result;
           setResData(data);
+          console.log(data);
         })
         .catch((error) => {
           console.log(error);
@@ -79,9 +82,10 @@ const FsspParser = (props) => {
   };
   const onGetStatus = (event) => {
     event.preventDefault();
+    const url = baseUrl + '/status';
     if (task !== '') {
       axios
-        .get('/status', {
+        .get(url, {
           params: {
             token: 'DTVVUTs1zL5o',
             task: task,
