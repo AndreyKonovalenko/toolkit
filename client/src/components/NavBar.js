@@ -37,7 +37,7 @@ const NavBar = (props) => {
           backgroundColor: '#04AA6d',
         }}
       >
-        TextSorser
+        TextSorter
       </NavLink>
     </li>
   );

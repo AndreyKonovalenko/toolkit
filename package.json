@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/AndreyKonovalenko/toolkit/issues"
   },
-  "homepage": "https://github.com/AndreyKonovalenko/toolkit#readme"
+  "homepage": "https://github.com/AndreyKonovalenko/toolkit#readme",
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
 }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {createUseStyles, useTheme} from 'react-jss';
 
 let useStyles = createUseStyles((theme) => ({
@@ -7,9 +7,13 @@ let useStyles = createUseStyles((theme) => ({
   },
 }));
 
+const axios = require('axios');
+
 const FsspParser = (props) => {
   const theme = useTheme();
   const classes = useStyles({...props, theme});
+  const [argString, setArgString] = useState('');
+  const [task, setTask] = useState('');
   // const [textData, setTextData] = useState('');
   // const [onClickStyle, setOnClickStyle] = useState(null);
   // const [presentData, setPresentData] = useState('');
@@ -19,31 +23,100 @@ const FsspParser = (props) => {
   //   event.preventDefault();
   //   console.log(`"Your text ${textData}"`);
   // };
-  // const onChangeHandler = (event) => {
-  //   setTextData(event.target.value);
+  const onChangeHandler = (event) => {
+    setArgString(event.target.value);
+  };
 
-  //   console.log(event.target.value);
-  // };
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log(argString);
+    const req = argString.split(' ');
+    console.log(req);
+    axios
+      .get('/search/physical', {
+        // crossdomain: true,
+        params: {
+          token: 'DTVVUTs1zL5o',
+          region: req[4],
+          firstname: req[0],
+          secondname: req[1],
+          lastname: req[2],
+          birthdate: req[3],
+        },
+      })
+      .then((res) => {
+        const task = res.data.response.task;
+        console.log(task);
+        setTask(task);
+      })
 
-  // const onFocusHander = () => {
-  //   setOnClickStyle({outlineColor: theme.colorPrimary});
-  // };
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  // const clearFields = () => {
-  //   setPresentData('');
-  //   setPastData('');
-  //   setTextData('');
-  // };
+  const onGetResponse = (event) => {
+    event.preventDefault();
+    if (task !== '') {
+      axios
+        .get('/result', {
+          params: {
+            token: 'DTVVUTs1zL5o',
+            task: task,
+          },
+        })
+        .then((res) => {
+          console.log(res.data.response.result[0].result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      console.log('task is empty');
+    }
+  };
+  const onGetStatus = (event) => {
+    event.preventDefault();
+    if (task !== '') {
+      axios
+        .get('/status', {
+          params: {
+            token: 'DTVVUTs1zL5o',
+            task: task,
+          },
+        })
+        .then((res) => {
+          console.log(res.data.status);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      console.log('task is empty');
+    }
+  };
 
   const data = (
     <div className={classes.container}>
-      <h2>HTML Forms</h2>
+      <h2>FSSP Parser</h2>
       <form>
-        <label for={'fname'}>First name:</label>
-        <input type={'text'} id={'fname'} name={'fname'} value={'John'} />
-        <label for={'lname'}>Last name:</label>
-        <input type={'text'} id={'lname'} name={'lname'} value={'Doe'} />
-        <input type={'submit'} value={'Submit'} />
+        <textarea
+          className={classes.textarea}
+          value={argString}
+          onChange={onChangeHandler}
+          rows='1'
+          cols='100'
+        />
+        <div>
+          <button onClick={onSubmitHandler}>submit</button>
+        </div>
+        <p>{task}</p>
+        <div>
+          <button onClick={onGetStatus}>Get Status</button>
+        </div>
+        <div>
+          <button onClick={onGetResponse}>Get Response</button>
+        </div>
       </form>
     </div>
   );

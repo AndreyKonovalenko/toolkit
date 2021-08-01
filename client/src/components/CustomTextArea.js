@@ -1,5 +1,5 @@
 import React from 'react';
-import { createUseStyles, useTheme } from 'react-jss';
+import {createUseStyles, useTheme} from 'react-jss';
 
 let useStyles = createUseStyles((theme) => ({
   textarea: {
@@ -9,18 +9,13 @@ let useStyles = createUseStyles((theme) => ({
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: theme.colorQuaternary,
-    boxShadow: [
-      [1, 1, 1, theme.colorPrimary]
-    ]
-
+    boxShadow: [[1, 1, 1, theme.colorPrimary]],
   },
 }));
 
-
 const CustomTextArea = (props) => {
-
   const theme = useTheme();
-  const classes = useStyles({ ...props, theme });
+  const classes = useStyles({...props, theme});
 
   return (
     <textarea
@@ -31,10 +26,9 @@ const CustomTextArea = (props) => {
       value={props.value}
       onChange={props.onChange}
       onFocus={props.onFocus}
-      rows="10"
-      cols="100"
+      rows='10'
+      cols='100'
     />
-
   );
 };
 
