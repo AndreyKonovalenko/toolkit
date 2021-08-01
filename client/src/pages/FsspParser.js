@@ -14,6 +14,7 @@ const FsspParser = (props) => {
   const classes = useStyles({...props, theme});
   const [argString, setArgString] = useState('');
   const [task, setTask] = useState('');
+  const [resData, setResData] = useState('');
   // const [textData, setTextData] = useState('');
   // const [onClickStyle, setOnClickStyle] = useState(null);
   // const [presentData, setPresentData] = useState('');
@@ -66,7 +67,8 @@ const FsspParser = (props) => {
           },
         })
         .then((res) => {
-          console.log(res.data.response.result[0].result);
+          const data = res.data.response.result[0].result;
+          setResData(data);
         })
         .catch((error) => {
           console.log(error);
