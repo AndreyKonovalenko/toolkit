@@ -10,29 +10,31 @@ const axios = require('axios');
 const baseUrl = '';
 //const baseUrl = 'https://api-ip.fssp.gov.ru/api/v1.0/';
 
+
+
+const sortText = (data) => {
+  data.forEach((element) => {
+    let re = /(\d+)(?:\.(\d{1,2}))?/g;
+    const found = element.subject.match(re);
+    console.log(found);
+  });
+}
+
+
+
 const FsspParser = (props) => {
   const theme = useTheme();
   const classes = useStyles({ ...props, theme });
   const [argString, setArgString] = useState('');
   const [task, setTask] = useState('');
   const [resData, setResData] = useState('');
-  // const [textData, setTextData] = useState('');
-  // const [onClickStyle, setOnClickStyle] = useState(null);
-  // const [presentData, setPresentData] = useState('');
-  // const [pastData, setPastData] = useState('');
 
-  // const onSumbmitHandler = (event) => {
-  //   event.preventDefault();
-  //   console.log(`"Your text ${textData}"`);
-  // };
-  const onChangeHandler = (event) => {
-    setArgString(event.target.value);
-  };
+  const clearRequestString = () => {
+    setArgString('');
+  }
 
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
-    console.log(argString);
-    const req = argString.split(' ');
+  const getRequestHandler = (dataString) => {
+    const req = dataString.split(' ');
     console.log(req);
     const url = baseUrl + 'search/physical';
     axios
@@ -55,7 +57,29 @@ const FsspParser = (props) => {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+
+  const onChangeHandler = (event) => {
+    setArgString(event.target.value);
   };
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    getRequestHandler(argString);
+    clearRequestString();
+
+  };
+
+
+  const handleEnterDown = event => {
+
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      getRequestHandler(argString);
+      clearRequestString();
+    }
+  }
 
   const onGetResponse = (event) => {
     event.preventDefault();
@@ -104,6 +128,12 @@ const FsspParser = (props) => {
     }
   };
 
+  const onParseResponse = (event) => {
+    event.preventDefault();
+    sortText(resData);
+
+  }
+
   const data = (
     <div className={classes.container}>
       <h2>FSSP Parser</h2>
@@ -112,6 +142,7 @@ const FsspParser = (props) => {
           className={classes.textarea}
           value={argString}
           onChange={onChangeHandler}
+          onKeyDown={handleEnterDown}
           rows='1'
           cols='100'
         />
@@ -124,6 +155,9 @@ const FsspParser = (props) => {
         </div>
         <div>
           <button onClick={onGetResponse}>Get Response</button>
+        </div>
+         <div>
+          <button onClick={onParseResponse}>Parse Response</button>
         </div>
       </form>
     </div>
