@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {createUseStyles, useTheme} from 'react-jss';
+import React, { useState } from 'react';
+import { createUseStyles, useTheme } from 'react-jss';
 
 let useStyles = createUseStyles((theme) => ({
   container: {
@@ -8,11 +8,11 @@ let useStyles = createUseStyles((theme) => ({
 }));
 const axios = require('axios');
 const baseUrl = '';
-//const baseUrl = 'https://api-ip.fssp.gov.ru/api/v1.0/'
+//const baseUrl = 'https://api-ip.fssp.gov.ru/api/v1.0/';
 
 const FsspParser = (props) => {
   const theme = useTheme();
-  const classes = useStyles({...props, theme});
+  const classes = useStyles({ ...props, theme });
   const [argString, setArgString] = useState('');
   const [task, setTask] = useState('');
   const [resData, setResData] = useState('');
@@ -76,7 +76,8 @@ const FsspParser = (props) => {
         .catch((error) => {
           console.log(error);
         });
-    } else {
+    }
+    else {
       console.log('task is empty');
     }
   };
@@ -97,7 +98,8 @@ const FsspParser = (props) => {
         .catch((error) => {
           console.log(error);
         });
-    } else {
+    }
+    else {
       console.log('task is empty');
     }
   };
