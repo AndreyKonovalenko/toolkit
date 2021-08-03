@@ -17,7 +17,7 @@ const FsspParser = (props) => {
   const [argString, setArgString] = useState('');
   const [task, setTask] = useState('');
   const [status, setStatus] = useState('')
-  const [resData, setResData] = useState('');
+  const [resData, setResData] = useState(null);
   const [parsedRes, setParsedRes] = useState('');
 
   const onSaveHandler = (id) => {
@@ -118,6 +118,9 @@ const FsspParser = (props) => {
         .then((res) => {
           const data = res.data.response.result[0].result;
           setResData(data);
+          if (data === null) {
+            setParsedRes("There is no response yet!")
+          }
           console.log(data);
         })
         .catch((error) => {
@@ -177,7 +180,7 @@ const FsspParser = (props) => {
         <div>
           <button onClick={onGetStatus}>Get Status</button>
           <button onClick={onGetResponse}>Get Response</button>
-          <button onClick={onParseResponse}>Parse Response</button>
+          <button onClick={onParseResponse} disabled={(resData === null) ? true: false}>Parse Response</button>
         </div>
       </form>
         <CustomTextArea
