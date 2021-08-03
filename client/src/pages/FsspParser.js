@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import CustomTextArea from '../components/CustomTextArea';
-import { createUseStyles, useTheme } from 'react-jss';
+import React, {useState} from 'react';
+import CustomTextArea from 'src/components/CustomTextArea';
+import {createUseStyles, useTheme} from 'react-jss';
 
 let useStyles = createUseStyles((theme) => ({
   container: {
@@ -13,10 +13,10 @@ const baseUrl = '';
 
 const FsspParser = (props) => {
   const theme = useTheme();
-  const classes = useStyles({ ...props, theme });
+  const classes = useStyles({...props, theme});
   const [argString, setArgString] = useState('');
   const [task, setTask] = useState('');
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState('');
   const [resData, setResData] = useState(null);
   const [parsedRes, setParsedRes] = useState('');
 
@@ -37,31 +37,35 @@ const FsspParser = (props) => {
           // console.log(parseFloat(found));
           let ip_stutus = element.ip_end;
 
-          if (ip_stutus === "") {
-            ip_stutus = 'действующее'
-          }
-          else {
+          if (ip_stutus === '') {
+            ip_stutus = 'действующее';
+          } else {
             ip_stutus = 'прекращено ' + element.ip_end;
           }
-          result = result + element.exe_production + ' / ' + ip_stutus + ' / ' + element.subject + '\n';
+          result =
+            result +
+            element.exe_production +
+            ' / ' +
+            ip_stutus +
+            ' / ' +
+            element.subject +
+            '\n';
         });
-      }
-      else {
-        result = 'ip not fuound !!!'
+      } else {
+        result = 'ip not fuound !!!';
       }
       setParsedRes(result);
+    } else {
+      setParsedRes('there is no response yet!');
     }
-    else {
-      setParsedRes("there is no response yet!")
-    }
-  }
+  };
   const clearRequestString = () => {
     setArgString('');
-  }
+  };
   const clearFields = () => {
-    setParsedRes("");
-    setArgString("")
-    setStatus("")
+    setParsedRes('');
+    setArgString('');
+    setStatus('');
   };
 
   const getRequestHandler = (dataString) => {
@@ -87,7 +91,7 @@ const FsspParser = (props) => {
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
   const onChangeHandler = (event) => {
     setArgString(event.target.value);
@@ -99,14 +103,13 @@ const FsspParser = (props) => {
     // clearRequestString();
   };
 
-
-  const handleEnterDown = event => {
+  const handleEnterDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
       getRequestHandler(argString);
       //  clearRequestString();
     }
-  }
+  };
 
   const onGetResponse = (event) => {
     event.preventDefault();
@@ -123,15 +126,14 @@ const FsspParser = (props) => {
           const data = res.data.response.result[0].result;
           setResData(data);
           if (data === null) {
-            setParsedRes("There is no response yet!")
+            setParsedRes('There is no response yet!');
           }
           console.log(data);
         })
         .catch((error) => {
           console.log(error);
         });
-    }
-    else {
+    } else {
       console.log('task is empty');
     }
   };
@@ -153,8 +155,7 @@ const FsspParser = (props) => {
         .catch((error) => {
           console.log(error);
         });
-    }
-    else {
+    } else {
       console.log('task is empty');
     }
   };
@@ -162,7 +163,7 @@ const FsspParser = (props) => {
   const onParseResponse = (event) => {
     event.preventDefault();
     sortText(resData);
-  }
+  };
 
   const data = (
     <div className={classes.container}>
@@ -181,17 +182,22 @@ const FsspParser = (props) => {
         </div>
         <p>task: {task}</p>
         <p>status: {status}</p>
-        <p>response: {(resData !== null) ?  'received' : ''}</p>
+        <p>response: {resData !== null ? 'received' : ''}</p>
         <div>
           <button onClick={onGetStatus}>Get Status</button>
           <button onClick={onGetResponse}>Get Response</button>
-          <button onClick={onParseResponse} disabled={(resData === null) ? true: false}>Parse Response</button>
+          <button
+            onClick={onParseResponse}
+            disabled={resData === null ? true : false}
+          >
+            Parse Response
+          </button>
         </div>
       </form>
-        <CustomTextArea
+      <CustomTextArea
         id={'result'}
-        onSubmit={()=>{}}
-        onChange={()=>{}}
+        onSubmit={() => {}}
+        onChange={() => {}}
         value={parsedRes}
         disabled={false}
       />
