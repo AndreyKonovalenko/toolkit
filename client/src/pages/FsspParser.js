@@ -40,7 +40,7 @@ const FsspParser = (props) => {
           ip_stutus = 'действующее'
         }
         else {
-          ip_stutus = 'прекращено' + element.ip_end;
+          ip_stutus = 'прекращено ' + element.ip_end;
         }
         result = result + element.exe_production + ' / ' + ip_stutus + ' / ' + element.subject + '\n';
       });
