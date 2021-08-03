@@ -11,6 +11,9 @@ let useStyles = createUseStyles((theme) => ({
     padding: '10px',
     color: '#666',
   },
+  small: {
+    fontWeight: 400
+  }
 }));
 
 const NavBar = (props) => {
@@ -20,7 +23,7 @@ const NavBar = (props) => {
 
   return (
     <div className={classes.footer}>
-      <h5>Created by Andrew</h5>
+      <small className={classes.small}>Created by Andrew</small>
     </div>
   );
 };
