@@ -1,7 +1,7 @@
 import React from 'react';
-import {ThemeProvider, createUseStyles} from 'react-jss';
+import { ThemeProvider, createUseStyles } from 'react-jss';
 import NavBar from './NavBar';
-
+import Footer from './Footer';
 const theme = {
   // color scheme
   colorPrimary: '#e38c4c',
@@ -29,10 +29,12 @@ let useStyles = createUseStyles(() => ({
   },
 
   main: {
+    marginTop: '5%',
     gridColumn: '2/3',
     gridRow: '2/3',
   },
   footer: {
+    marginTop: '5%',
     gridColumn: '1/3',
     gridRow: '3/4',
   },
@@ -47,10 +49,9 @@ const Layout = (props) => {
         <div className={classes.header}>
           <NavBar />
         </div>
-        <div className={classes.aside}> Place for component</div>
         <div className={classes.main}>{props.children}</div>
         <div className={classes.footer}>
-          <h3>Place for footer component</h3>
+          <Footer />
         </div>
       </div>
     </ThemeProvider>

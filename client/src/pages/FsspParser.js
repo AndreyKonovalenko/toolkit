@@ -30,27 +30,31 @@ const FsspParser = (props) => {
   const sortText = (data) => {
     if (data !== null) {
       let result = '';
-      data.forEach((element) => {
-        // let re = /(\d+)(?:\.(\d{1,2}))?/g;
-        // const found = element.subject.match(re);
-        // console.log(parseFloat(found));
-        let ip_stutus = element.ip_end;
+      if (data.length > 0) {
+        data.forEach((element) => {
+          // let re = /(\d+)(?:\.(\d{1,2}))?/g;
+          // const found = element.subject.match(re);
+          // console.log(parseFloat(found));
+          let ip_stutus = element.ip_end;
 
-        if (ip_stutus === "") {
-          ip_stutus = 'действующее'
-        }
-        else {
-          ip_stutus = 'прекращено ' + element.ip_end;
-        }
-        result = result + element.exe_production + ' / ' + ip_stutus + ' / ' + element.subject + '\n';
-      });
+          if (ip_stutus === "") {
+            ip_stutus = 'действующее'
+          }
+          else {
+            ip_stutus = 'прекращено ' + element.ip_end;
+          }
+          result = result + element.exe_production + ' / ' + ip_stutus + ' / ' + element.subject + '\n';
+        });
+      }
+      else {
+        result = 'ip not fuound !!!'
+      }
       setParsedRes(result);
     }
     else {
       setParsedRes("there is no response yet!")
     }
   }
-
   const clearRequestString = () => {
     setArgString('');
   }
@@ -177,6 +181,7 @@ const FsspParser = (props) => {
         </div>
         <p>task: {task}</p>
         <p>status: {status}</p>
+        <p>response: {(resData !== null) ?  'received' : ''}</p>
         <div>
           <button onClick={onGetStatus}>Get Status</button>
           <button onClick={onGetResponse}>Get Response</button>
