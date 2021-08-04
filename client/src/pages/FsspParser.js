@@ -30,13 +30,23 @@ const FsspParser = (props) => {
   const sortText = (data) => {
     if (data !== null) {
       let result = '';
+      let totalsum = 0
       if (data.length > 0) {
         data.forEach((element) => {
-          // let re = /(\d+)(?:\.(\d{1,2}))?/g;
-          // const found = element.subject.match(re);
-          // console.log(parseFloat(found));
+          const re = /(: \d+)(?:\.(\d{1,2}))?/g; // find all ": 1000.33" in string
+          const re2 = /(\d+)(?:\.(\d{1,2}))?/g; // find only nubmers
+          const found = element.subject.match(re);
+          if (found !== null) {
+            const sum = found.map((element) => parseFloat(element.match(re2)));
+            let localresult = 0;
+            sum.forEach(element => {
+              localresult = localresult + element
+            });
+            console.log(sum);
+            console.log(localresult)
+            totalsum = totalsum + localresult;
+          }
           let ip_stutus = element.ip_end;
-
           if (ip_stutus === "") {
             ip_stutus = 'действующее'
           }
@@ -49,12 +59,14 @@ const FsspParser = (props) => {
       else {
         result = 'ip not fuound !!!'
       }
-      setParsedRes(result);
+      const fullresult = result + '\n' + 'всего ' + data.length + " ип на сумму " + totalsum.toFixed(2);
+      setParsedRes(fullresult);
     }
     else {
       setParsedRes("there is no response yet!")
     }
   }
+
   const clearRequestString = () => {
     setArgString('');
   }
