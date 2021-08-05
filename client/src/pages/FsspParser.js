@@ -8,8 +8,7 @@ let useStyles = createUseStyles((theme) => ({
   },
 }));
 const axios = require('axios');
-const baseUrl = '';
-//const baseUrl = 'https://api-ip.fssp.gov.ru/api/v1.0/';
+//axios.defaults.baseURL = '/'
 
 const FsspParser = (props) => {
   const theme = useTheme();
@@ -78,7 +77,7 @@ const FsspParser = (props) => {
   const getRequestHandler = (dataString) => {
     const req = dataString.split(' ');
     console.log(req);
-    const url = baseUrl + 'search/physical';
+    const url = '/search/physical'; // exclude app from request path string
     axios
       .get(url, {
         params: {
@@ -120,7 +119,7 @@ const FsspParser = (props) => {
 
   const onGetResponse = (event) => {
     event.preventDefault();
-    const url = baseUrl + '/result';
+    const url = '/result';
     if (task !== '') {
       axios
         .get(url, {
@@ -147,7 +146,7 @@ const FsspParser = (props) => {
   };
   const onGetStatus = (event) => {
     event.preventDefault();
-    const url = baseUrl + '/status';
+    const url = '/status';
     if (task !== '') {
       axios
         .get(url, {
