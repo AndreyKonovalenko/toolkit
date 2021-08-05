@@ -1,4 +1,4 @@
-import { useEffect, Fragment } from 'react';
+import { useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -169,7 +169,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   );
 
   return (
-    <Fragment>
+    <>
       <Hidden lgUp>
         <Drawer
           anchor='left'
@@ -201,7 +201,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           {content}
         </Drawer>
       </Hidden>
-    </Fragment>
+    </>
   );
 };
 
