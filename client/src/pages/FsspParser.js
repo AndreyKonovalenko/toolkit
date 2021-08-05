@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import CustomTextArea from 'src/components/CustomTextArea';
-import {createUseStyles, useTheme} from 'react-jss';
+import { createUseStyles, useTheme } from 'react-jss';
 
 let useStyles = createUseStyles((theme) => ({
   container: {
@@ -13,7 +13,7 @@ const baseUrl = '';
 
 const FsspParser = (props) => {
   const theme = useTheme();
-  const classes = useStyles({...props, theme});
+  const classes = useStyles({ ...props, theme });
   const [argString, setArgString] = useState('');
   const [task, setTask] = useState('');
   const [status, setStatus] = useState('');
@@ -30,35 +30,42 @@ const FsspParser = (props) => {
   const sortText = (data) => {
     if (data !== null) {
       let result = '';
+      let totalsum = 0
       if (data.length > 0) {
         data.forEach((element) => {
-          // let re = /(\d+)(?:\.(\d{1,2}))?/g;
-          // const found = element.subject.match(re);
-          // console.log(parseFloat(found));
+          const re = /(: \d+)(?:\.(\d{1,2}))?/g; // find all ": 1000.33" in string
+          const re2 = /(\d+)(?:\.(\d{1,2}))?/g; // find only nubmers
+          const found = element.subject.match(re);
+          if (found !== null) {
+            const sum = found.map((element) => parseFloat(element.match(re2)));
+            let localresult = 0;
+            sum.forEach(element => {
+              localresult = localresult + element
+            });
+            console.log(sum);
+            console.log(localresult)
+            totalsum = totalsum + localresult;
+          }
           let ip_stutus = element.ip_end;
-
-          if (ip_stutus === '') {
-            ip_stutus = 'действующее';
-          } else {
+          if (ip_stutus === "") {
+            ip_stutus = 'действующее'
+          }
+          else {
             ip_stutus = 'прекращено ' + element.ip_end;
           }
-          result =
-            result +
-            element.exe_production +
-            ' / ' +
-            ip_stutus +
-            ' / ' +
-            element.subject +
-            '\n';
+          result = result + element.exe_production + ' / ' + ip_stutus + ' / ' + element.subject + '\n';
         });
-      } else {
-        result = 'ip not fuound !!!';
       }
-      setParsedRes(result);
-    } else {
-      setParsedRes('there is no response yet!');
+      else {
+        result = 'ip not fuound !!!'
+      }
+      const fullresult = result + '\n' + 'всего ' + data.length + " ип на сумму " + totalsum.toFixed(2);
+      setParsedRes(fullresult);
     }
-  };
+    else {
+      setParsedRes("there is no response yet!")
+    }
+  }
   const clearRequestString = () => {
     setArgString('');
   };
@@ -133,7 +140,8 @@ const FsspParser = (props) => {
         .catch((error) => {
           console.log(error);
         });
-    } else {
+    }
+    else {
       console.log('task is empty');
     }
   };
@@ -155,7 +163,8 @@ const FsspParser = (props) => {
         .catch((error) => {
           console.log(error);
         });
-    } else {
+    }
+    else {
       console.log('task is empty');
     }
   };

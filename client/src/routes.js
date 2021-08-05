@@ -1,4 +1,4 @@
-import {Navigate} from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/components/DashboardLayout';
 import MainLayout from 'src/components/MainLayout';
 import Account from 'src/pages/Account';
@@ -11,29 +11,28 @@ import ProductList from 'src/pages/ProductList';
 import Register from 'src/pages/Register';
 import Settings from 'src/pages/Settings';
 
-const routes = [
-  {
+const routes = [{
     path: 'app',
     element: <DashboardLayout />,
     children: [
-      {path: 'account', element: <Account />},
-      {path: 'customers', element: <CustomerList />},
-      {path: 'dashboard', element: <Dashboard />},
-      {path: 'fsspparser', element: <FsspParser />},
-      {path: 'products', element: <ProductList />},
-      {path: 'settings', element: <Settings />},
-      {path: '*', element: <Navigate to='/404' />},
+      { path: 'account', element: <Account /> },
+      { path: 'customers', element: <CustomerList /> },
+      { path: 'dashboard', element: <Dashboard /> },
+      { path: 'fsspparser', element: <FsspParser /> },
+      { path: 'products', element: <ProductList /> },
+      { path: 'settings', element: <Settings /> },
+      { path: '*', element: <Navigate to='/404' /> },
     ],
   },
   {
     path: '/',
     element: <MainLayout />,
     children: [
-      {path: 'login', element: <Login />},
-      {path: 'register', element: <Register />},
-      {path: '404', element: <NotFound />},
-      {path: '/', element: <Navigate to='/app/dashboard' />},
-      {path: '*', element: <Navigate to='/404' />},
+      { path: 'login', element: <Login /> },
+      { path: 'register', element: <Register /> },
+      { path: '404', element: <NotFound /> },
+      { path: '/', element: <Navigate to='/app/dashboard' /> },
+      { path: '*', element: <Navigate to='/404' /> },
     ],
   },
 ];

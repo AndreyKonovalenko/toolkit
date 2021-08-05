@@ -1,5 +1,5 @@
-import {useEffect} from 'react';
-import {Link as RouterLink, useLocation} from 'react-router-dom';
+import { useEffect, Fragment } from 'react';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Avatar,
@@ -10,7 +10,8 @@ import {
   Hidden,
   List,
   Typography,
-} from '@material-ui/core';
+}
+from '@material-ui/core';
 import {
   AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
@@ -21,17 +22,17 @@ import {
   UserPlus as UserPlusIcon,
   Users as UsersIcon,
   Tool as ToolIcon,
-} from 'react-feather';
+}
+from 'react-feather';
 import NavItem from './NavItem';
 
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith',
+  avatar: '',
+  jobTitle: 'Master',
+  name: 'Admin',
 };
 
-const items = [
-  {
+const items = [{
     href: '/app/dashboard',
     icon: BarChartIcon,
     title: 'Dashboard',
@@ -78,7 +79,7 @@ const items = [
   },
 ];
 
-const DashboardSidebar = ({onMobileClose, openMobile}) => {
+const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
 
   useEffect(() => {
@@ -142,10 +143,10 @@ const DashboardSidebar = ({onMobileClose, openMobile}) => {
         }}
       >
         <Typography align='center' gutterBottom variant='h4'>
-          Need more?
+          Advertisement place
         </Typography>
         <Typography align='center' variant='body2'>
-          Upgrade to PRO version and access 20 more screens
+          Advertisement slogan
         </Typography>
         <Box
           sx={{
@@ -160,7 +161,7 @@ const DashboardSidebar = ({onMobileClose, openMobile}) => {
             href='https://react-material-kit.devias.io'
             variant='contained'
           >
-            See PRO version
+            Go to
           </Button>
         </Box>
       </Box>
@@ -168,7 +169,7 @@ const DashboardSidebar = ({onMobileClose, openMobile}) => {
   );
 
   return (
-    <>
+    <Fragment>
       <Hidden lgUp>
         <Drawer
           anchor='left'
@@ -200,7 +201,7 @@ const DashboardSidebar = ({onMobileClose, openMobile}) => {
           {content}
         </Drawer>
       </Hidden>
-    </>
+    </Fragment>
   );
 };
 
