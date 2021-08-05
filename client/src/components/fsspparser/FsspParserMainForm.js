@@ -267,16 +267,16 @@ const FsspParserMainForm= (props) => {
           </Box>
           <Divider />
           <TextareaAutosize
-            aria-label="empty textarea"
+            arieLabel="empty textarea"
+            color="textSecondary"
             id={'result'}
             onSubmit={() => {}}
             onChange={() => {}}
             value={parsedRes}
-            color="textSecondary"
-            variant="body1"
-            placeholder="Empty"
             minRows={10}
+            placeholder="Empty"
             style={{ width: '100%' }}
+            variant="body1"
           />
         </CardContent>
         <Divider />
