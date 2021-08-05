@@ -28,11 +28,13 @@ const FsspParserMainForm= (props) => {
   };
 
   const sortText = (data) => {
+    const new_line = '\n';
     if (data !== null) {
       let result = '';
       let totalsum = 0
       if (data.length > 0) {
         data.forEach((element) => {
+
           const re = /(: \d+)(?:\.(\d{1,2}))?/g; // find all ": 1000.33" in string
           const re2 = /(\d+)(?:\.(\d{1,2}))?/g; // find only nubmers
           const found = element.subject.match(re);
@@ -53,22 +55,19 @@ const FsspParserMainForm= (props) => {
           else {
             ip_stutus = 'прекращено ' + element.ip_end;
           }
-          result = result + element.exe_production + ' / ' + ip_stutus + ' / ' + element.subject + '\n';
+          result = result + element.exe_production + ' / ' + ip_stutus + ' / ' + element.subject + new_line;
         });
       }
       else {
         result = 'ip not fuound !!!'
       }
-      const fullresult = result + '\n' + 'всего ' + data.length + " ип на сумму " + totalsum.toFixed(2);
+      const fullresult = result + new_line + 'всего ' + data.length + " ип на сумму " + totalsum.toFixed(2);
       setParsedRes(fullresult);
     }
     else {
       setParsedRes("there is no response yet!")
     }
   }
-  const clearRequestString = () => {
-    setArgString('');
-  };
   const clearFields = () => {
     setParsedRes('');
     setArgString('');
@@ -189,7 +188,6 @@ const FsspParserMainForm= (props) => {
           <TextField
             fullWidth
             label="query string"
-            margin="normal"
             name="query string"
             onChange={onChangeHandler}
             onKeyDown={handleEnterDown}
@@ -236,13 +234,13 @@ const FsspParserMainForm= (props) => {
             </Typography>
           </Box>
           <Divider />
-             <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-evenly',
-              p: 2
-            }}>
-             <Button
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-evenly',
+                p: 2
+              }}>
+              <Button
               onClick={onGetStatus}
               color="primary"
               variant="contained"
@@ -266,42 +264,39 @@ const FsspParserMainForm= (props) => {
             </Button>
           </Box>
           <Divider />
+
           <TextareaAutosize
-            arieLabel="empty textarea"
+            aria-label="response data"
             color="textSecondary"
             id={'result'}
-            onSubmit={() => {}}
-            onChange={() => {}}
             value={parsedRes}
             minRows={10}
+            style={{width:"100%"}}
             placeholder="Empty"
-            style={{ width: '100%' }}
-            variant="body1"
-          />
+            />
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-evenly',
+                p: 2
+              }}
+            >
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => onSaveHandler('result')}
+              >
+                Save
+              </Button>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={clearFields}
+              >
+                Clear
+              </Button>
+            </Box>
         </CardContent>
-        <Divider />
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-evenly',
-            p: 2
-          }}
-        >
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={() => onSaveHandler('result')}
-          >
-            Save
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={clearFields}
-          >
-            Clear
-          </Button>
-        </Box>
       </Card>
     </form>
   );
