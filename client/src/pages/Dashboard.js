@@ -3,7 +3,8 @@ import {
   Box,
   Container,
   Grid
-} from '@material-ui/core';
+}
+from '@material-ui/core';
 import Budget from 'src/components/dashboard//Budget';
 import LatestOrders from 'src/components/dashboard//LatestOrders';
 import LatestProducts from 'src/components/dashboard//LatestProducts';
@@ -14,18 +15,18 @@ import TotalProfit from 'src/components/dashboard//TotalProfit';
 import TrafficByDevice from 'src/components/dashboard//TrafficByDevice';
 
 const Dashboard = () => (
-  <>
-    <Helmet>
+  < >
+  <Helmet>
       <title>Dashboard | Material Kit</title>
-    </Helmet>
-    <Box
-      sx={{
-        backgroundColor: 'background.default',
-        minHeight: '100%',
-        py: 3
-      }}
-    >
-      <Container maxWidth={false}>
+    </Helmet> <
+  Box sx = {
+    {
+      backgroundColor: 'background.default',
+      minHeight: '100%',
+      py: 3
+    }
+  } >
+  <Container maxWidth={false}>
         <Grid
           container
           spacing={3}
@@ -103,8 +104,8 @@ const Dashboard = () => (
             <LatestOrders />
           </Grid>
         </Grid>
-      </Container>
-    </Box>
+      </Container> <
+  /Box>
   </>
 );
 

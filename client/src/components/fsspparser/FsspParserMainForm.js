@@ -10,9 +10,10 @@ import {
   TextField,
   TextareaAutosize,
   Typography
-} from '@material-ui/core';
+}
+from '@material-ui/core';
 
-const FsspParserMainForm= (props) => {
+const FsspParserMainForm = (props) => {
 
   const [argString, setArgString] = useState('');
   const [task, setTask] = useState('');
@@ -28,25 +29,25 @@ const FsspParserMainForm= (props) => {
     document.execCommand('copy');
   };
 
-// Request timerOut logic ----------------------------------------
+  // Request timerOut logic ----------------------------------------
 
-const setTimer = () => {
-  let delay = 5000;
-  let timerId = setTimeout(() => {
-    getResponse('/result');
-    console.log("request executed!")
-    // if (ошибка запроса из-за перегрузки сервера) {
-    //   // увеличить интервал для следующего запроса
-    //   delay *= 2;
-  //   // }
-  // }
-  //   timerId = setTimeout(request, delay);
-  }, delay);
-  setTimerId(timerId)
-  console.log(timerId);
-}
+  const setTimer = () => {
+    let delay = 5000;
+    let timerId = setTimeout(() => {
+      getResponse('/result');
+      console.log("request executed!")
+      // if (ошибка запроса из-за перегрузки сервера) {
+      //   // увеличить интервал для следующего запроса
+      //   delay *= 2;
+      //   // }
+      // }
+      //   timerId = setTimeout(request, delay);
+    }, delay);
+    setTimerId(timerId)
+    console.log(timerId);
+  }
 
-// Response parsing logic-----------------------------------------
+  // Response parsing logic-----------------------------------------
   const sortText = (data) => {
     const new_line = '\n';
     if (data !== null) {
@@ -89,28 +90,27 @@ const setTimer = () => {
     }
   }
 
-// HTTP requests AXIOS --------------------------------------------------------------------------------
-const getResponse = (url) => {
-  axios.get(url, {
-    params: {
-      token: 'DTVVUTs1zL5o',
-      task: task,
-    },
-    })
-    .then((res) => {
-      const data = res.data.response.result[0].result;
-      setResData(data);
-      if (data === null) {
-        setParsedRes('There is no response yet!');
-      }
-      console.log(data);
+  // HTTP requests AXIOS --------------------------------------------------------------------------------
+  const getResponse = (url) => {
+    axios.get(url, {
+        params: {
+          token: 'DTVVUTs1zL5o',
+          task: task,
+        },
+      })
+      .then((res) => {
+        const data = res.data.response.result[0].result;
+        setResData(data);
+        clearTimeout(timerId);
+        setTimerId(null)
+        console.log('timer cleared')
+        console.log(data);
       })
       .catch((error) => {
-      console.log(error);
-    }
-  );
-}
-// EVENT HANDLERS --------------------------------------------------------------------------------------
+        console.log(error);
+      });
+  }
+  // EVENT HANDLERS --------------------------------------------------------------------------------------
 
   const clearFields = () => {
     setParsedRes('');
@@ -118,7 +118,7 @@ const getResponse = (url) => {
     setStatus('');
     setTask('');
     setResData(null);
-   // setTimerId(null);
+    // setTimerId(null);
   };
 
   const getRequestHandler = (dataString) => {
@@ -201,18 +201,14 @@ const getResponse = (url) => {
 
   // Effect Hooks ----------------------------------------------------------------------------------------
 
- useEffect(() => {
-    if (task !== '' && timerId === null) {
-      setTimer();
+  useEffect(() => {
+    if (resData === null && timerId === null ) {
+      if (task !== '' && timerId === null) {
+        setTimer();
+      }
     }
-    if (resData !== null && timerId ==! null) {
-      clearTimeout(timerId);
-      setTimerId(null);
-      console.log('timer cleared')
-    }
-
     console.log(task, timerId);
-  }, [task, timerId, resData, setTimer]);
+  });
 
   // component JSX structure  -----------------------------------------------------------------------------
 
