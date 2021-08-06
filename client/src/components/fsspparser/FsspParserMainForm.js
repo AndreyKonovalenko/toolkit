@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   Box,
@@ -19,6 +19,7 @@ const FsspParserMainForm= (props) => {
   const [status, setStatus] = useState('');
   const [resData, setResData] = useState(null);
   const [parsedRes, setParsedRes] = useState('');
+  const [timerId, setTimerId] = useState(null);
 
   const onSaveHandler = (id) => {
     let copyText = document.getElementById(id);
@@ -27,6 +28,25 @@ const FsspParserMainForm= (props) => {
     document.execCommand('copy');
   };
 
+// Request timerOut logic ----------------------------------------
+
+const setTimer = () => {
+  let delay = 5000;
+  let timerId = setTimeout(() => {
+    getResponse('/result');
+    console.log("request executed!")
+    // if (ошибка запроса из-за перегрузки сервера) {
+    //   // увеличить интервал для следующего запроса
+    //   delay *= 2;
+  //   // }
+  // }
+  //   timerId = setTimeout(request, delay);
+  }, delay);
+  setTimerId(timerId)
+  console.log(timerId);
+}
+
+// Response parsing logic-----------------------------------------
   const sortText = (data) => {
     const new_line = '\n';
     if (data !== null) {
@@ -68,12 +88,37 @@ const FsspParserMainForm= (props) => {
       setParsedRes("there is no response yet!")
     }
   }
+
+// HTTP requests AXIOS --------------------------------------------------------------------------------
+const getResponse = (url) => {
+  axios.get(url, {
+    params: {
+      token: 'DTVVUTs1zL5o',
+      task: task,
+    },
+    })
+    .then((res) => {
+      const data = res.data.response.result[0].result;
+      setResData(data);
+      if (data === null) {
+        setParsedRes('There is no response yet!');
+      }
+      console.log(data);
+      })
+      .catch((error) => {
+      console.log(error);
+    }
+  );
+}
+// EVENT HANDLERS --------------------------------------------------------------------------------------
+
   const clearFields = () => {
     setParsedRes('');
     setArgString('');
     setStatus('');
     setTask('');
     setResData(null);
+   // setTimerId(null);
   };
 
   const getRequestHandler = (dataString) => {
@@ -122,30 +167,9 @@ const FsspParserMainForm= (props) => {
   const onGetResponse = (event) => {
     event.preventDefault();
     const url = '/result';
-    if (task !== '') {
-      axios
-        .get(url, {
-          params: {
-            token: 'DTVVUTs1zL5o',
-            task: task,
-          },
-        })
-        .then((res) => {
-          const data = res.data.response.result[0].result;
-          setResData(data);
-          if (data === null) {
-            setParsedRes('There is no response yet!');
-          }
-          console.log(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    else {
-      console.log('task is empty');
-    }
+    getResponse('/result');
   };
+
   const onGetStatus = (event) => {
     event.preventDefault();
     const url = '/status';
@@ -175,6 +199,22 @@ const FsspParserMainForm= (props) => {
     sortText(resData);
   };
 
+  // Effect Hooks ----------------------------------------------------------------------------------------
+
+ useEffect(() => {
+    if (task !== '' && timerId === null) {
+      setTimer();
+    }
+    if (resData !== null && timerId ==! null) {
+      clearTimeout(timerId);
+      setTimerId(null);
+      console.log('timer cleared')
+    }
+
+    console.log(task, timerId);
+  }, [task, timerId, resData, setTimer]);
+
+  // component JSX structure  -----------------------------------------------------------------------------
 
   return (
     <form {...props}>
