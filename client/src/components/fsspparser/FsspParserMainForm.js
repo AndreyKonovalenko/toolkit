@@ -6,10 +6,12 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CircularProgress,
   Divider,
+  LinearProgress,
   TextField,
   TextareaAutosize,
-  Typography
+  Typography,
 }
 from '@material-ui/core';
 
@@ -19,8 +21,11 @@ const FsspParserMainForm = (props) => {
   const [task, setTask] = useState('');
   const [status, setStatus] = useState('');
   const [resData, setResData] = useState(null);
-  const [parsedRes, setParsedRes] = useState('');
+  const [parsedRes, setParsedRes] = useState("");
   const [timerId, setTimerId] = useState(null);
+  const [progress, setProgress] = useState(false);
+
+  // Util functions ---------------------------------------------------
 
   const onSaveHandler = (id) => {
     let copyText = document.getElementById(id);
@@ -29,13 +34,14 @@ const FsspParserMainForm = (props) => {
     document.execCommand('copy');
   };
 
-  // Request timerOut logic ----------------------------------------
+  // Request Timeout logic ----------------------------------------
 
   const setTimer = () => {
     let delay = 5000;
     let timerId = setTimeout(() => {
-      getResponse('/result');
-      console.log("request executed!")
+      autoGetResponse('/result');
+      console.log("request executed!");
+      // recursion may be implemented
       // if (ошибка запроса из-за перегрузки сервера) {
       //   // увеличить интервал для следующего запроса
       //   delay *= 2;
@@ -43,19 +49,17 @@ const FsspParserMainForm = (props) => {
       // }
       //   timerId = setTimeout(request, delay);
     }, delay);
-    setTimerId(timerId)
-    console.log(timerId);
-  }
+    setTimerId(timerId);
+  };
 
   // Response parsing logic-----------------------------------------
-  const sortText = (data) => {
+  const responseParser = (data) => {
     const new_line = '\n';
     if (data !== null) {
       let result = '';
-      let totalsum = 0
+      let totalsum = 0;
       if (data.length > 0) {
         data.forEach((element) => {
-
           const re = /(: \d+)(?:\.(\d{1,2}))?/g; // find all ": 1000.33" in string
           const re2 = /(\d+)(?:\.(\d{1,2}))?/g; // find only nubmers
           const found = element.subject.match(re);
@@ -63,15 +67,13 @@ const FsspParserMainForm = (props) => {
             const sum = found.map((element) => parseFloat(element.match(re2)));
             let localresult = 0;
             sum.forEach(element => {
-              localresult = localresult + element
+              localresult = localresult + element;
             });
-            console.log(sum);
-            console.log(localresult)
             totalsum = totalsum + localresult;
           }
           let ip_stutus = element.ip_end;
           if (ip_stutus === "") {
-            ip_stutus = 'действующее'
+            ip_stutus = 'действующее';
           }
           else {
             ip_stutus = 'прекращено ' + element.ip_end;
@@ -80,18 +82,19 @@ const FsspParserMainForm = (props) => {
         });
       }
       else {
-        result = 'ip not fuound !!!'
+        result = 'ip not fuound !!!';
       }
+
       const fullresult = result + new_line + 'всего ' + data.length + " ип на сумму " + totalsum.toFixed(2);
       setParsedRes(fullresult);
     }
     else {
-      setParsedRes("there is no response yet!")
+      setParsedRes("there is no response yet!");
     }
-  }
+  };
 
   // HTTP requests AXIOS --------------------------------------------------------------------------------
-  const getResponse = (url) => {
+  const autoGetResponse = (url) => {
     axios.get(url, {
         params: {
           token: 'DTVVUTs1zL5o',
@@ -102,14 +105,15 @@ const FsspParserMainForm = (props) => {
         const data = res.data.response.result[0].result;
         setResData(data);
         clearTimeout(timerId);
-        setTimerId(null)
-        console.log('timer cleared')
-        console.log(data);
+        setTimerId(null);
+        setProgress(false);
       })
       .catch((error) => {
         console.log(error);
-      });
-  }
+        setProgress(false);
+      }
+    );
+  };
   // EVENT HANDLERS --------------------------------------------------------------------------------------
 
   const clearFields = () => {
@@ -118,11 +122,12 @@ const FsspParserMainForm = (props) => {
     setStatus('');
     setTask('');
     setResData(null);
-    // setTimerId(null);
+    setProgress(false);
   };
 
   const getRequestHandler = (dataString) => {
     const req = dataString.split(' ');
+    setProgress(true);
     console.log(req);
     const url = '/search/physical'; // exclude app from request path string
     axios
@@ -138,11 +143,11 @@ const FsspParserMainForm = (props) => {
       })
       .then((res) => {
         const task = res.data.response.task;
-        console.log(task);
         setTask(task);
       })
       .catch((error) => {
         console.log(error);
+        setProgress(false);
       });
   };
 
@@ -153,21 +158,34 @@ const FsspParserMainForm = (props) => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     getRequestHandler(argString);
-    // clearRequestString();
   };
 
   const handleEnterDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
       getRequestHandler(argString);
-      //  clearRequestString();
     }
   };
 
   const onGetResponse = (event) => {
     event.preventDefault();
-    const url = '/result';
-    getResponse('/result');
+    const url = ('/result');
+      axios.get(url, {
+        params: {
+          token: 'DTVVUTs1zL5o',
+          task: task,
+        },
+      })
+      .then((res) => {
+        const data = res.data.response.result[0].result;
+        setResData(data);
+        setProgress(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setProgress(false);
+      }
+    );
   };
 
   const onGetStatus = (event) => {
@@ -183,7 +201,6 @@ const FsspParserMainForm = (props) => {
         })
         .then((res) => {
           setStatus(res.data.status);
-          console.log(res.data.status);
         })
         .catch((error) => {
           console.log(error);
@@ -196,7 +213,7 @@ const FsspParserMainForm = (props) => {
 
   const onParseResponse = (event) => {
     event.preventDefault();
-    sortText(resData);
+    responseParser(resData);
   };
 
   // Effect Hooks ----------------------------------------------------------------------------------------
@@ -207,7 +224,9 @@ const FsspParserMainForm = (props) => {
         setTimer();
       }
     }
-    console.log(task, timerId);
+    if(resData !== null && parsedRes === ""){
+      responseParser(resData);
+    }
   });
 
   // component JSX structure  -----------------------------------------------------------------------------
@@ -288,7 +307,7 @@ const FsspParserMainForm = (props) => {
               color="primary"
               variant="contained"
             >
-              Get Resopnse
+              Manual Request
             </Button>
              <Button
               onClick={onParseResponse}
@@ -296,11 +315,17 @@ const FsspParserMainForm = (props) => {
               variant="contained"
               disabled={resData === null ? true : false}
             >
-              Parse Response
+              Manual Parse Response
             </Button>
           </Box>
           <Divider />
-
+          <Box
+              sx={{
+                p: 2
+              }}
+          >
+            {(progress === true)? <LinearProgress />: null}
+          </Box>
           <TextareaAutosize
             aria-label="response data"
             color="textSecondary"
