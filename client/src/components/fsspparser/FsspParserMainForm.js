@@ -6,22 +6,19 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CircularProgress,
   Divider,
   LinearProgress,
   TextField,
   TextareaAutosize,
   Typography,
-}
-from '@material-ui/core';
+} from '@material-ui/core';
 
 const FsspParserMainForm = (props) => {
-
   const [argString, setArgString] = useState('');
   const [task, setTask] = useState('');
   const [status, setStatus] = useState('');
   const [resData, setResData] = useState(null);
-  const [parsedRes, setParsedRes] = useState("");
+  const [parsedRes, setParsedRes] = useState('');
   const [timerId, setTimerId] = useState(null);
   const [progress, setProgress] = useState(false);
 
@@ -40,7 +37,7 @@ const FsspParserMainForm = (props) => {
     let delay = 5000;
     let timerId = setTimeout(() => {
       autoGetResponse('/result');
-      console.log("request executed!");
+      console.log('request executed!');
       // recursion may be implemented
       // if (ошибка запроса из-за перегрузки сервера) {
       //   // увеличить интервал для следующего запроса
@@ -66,36 +63,46 @@ const FsspParserMainForm = (props) => {
           if (found !== null) {
             const sum = found.map((element) => parseFloat(element.match(re2)));
             let localresult = 0;
-            sum.forEach(element => {
+            sum.forEach((element) => {
               localresult = localresult + element;
             });
             totalsum = totalsum + localresult;
           }
           let ip_stutus = element.ip_end;
-          if (ip_stutus === "") {
+          if (ip_stutus === '') {
             ip_stutus = 'действующее';
-          }
-          else {
+          } else {
             ip_stutus = 'прекращено ' + element.ip_end;
           }
-          result = result + element.exe_production + ' / ' + ip_stutus + ' / ' + element.subject + new_line;
+          result =
+            result +
+            element.exe_production +
+            ' / ' +
+            ip_stutus +
+            ' / ' +
+            element.subject +
+            new_line;
         });
-      }
-      else {
+      } else {
         result = 'ip not fuound !!!';
       }
-
-      const fullresult = result + new_line + 'всего ' + data.length + " ип на сумму " + totalsum.toFixed(2);
+      const fullresult =
+        result +
+        new_line +
+        'всего ' +
+        data.length +
+        ' ип на сумму ' +
+        totalsum.toFixed(2);
       setParsedRes(fullresult);
-    }
-    else {
-      setParsedRes("there is no response yet!");
+    } else {
+      setParsedRes('there is no response yet!');
     }
   };
 
   // HTTP requests AXIOS --------------------------------------------------------------------------------
   const autoGetResponse = (url) => {
-    axios.get(url, {
+    axios
+      .get(url, {
         params: {
           token: 'DTVVUTs1zL5o',
           task: task,
@@ -111,8 +118,7 @@ const FsspParserMainForm = (props) => {
       .catch((error) => {
         console.log(error);
         setProgress(false);
-      }
-    );
+      });
   };
   // EVENT HANDLERS --------------------------------------------------------------------------------------
 
@@ -169,8 +175,9 @@ const FsspParserMainForm = (props) => {
 
   const onGetResponse = (event) => {
     event.preventDefault();
-    const url = ('/result');
-      axios.get(url, {
+    const url = '/result';
+    axios
+      .get(url, {
         params: {
           token: 'DTVVUTs1zL5o',
           task: task,
@@ -184,8 +191,7 @@ const FsspParserMainForm = (props) => {
       .catch((error) => {
         console.log(error);
         setProgress(false);
-      }
-    );
+      });
   };
 
   const onGetStatus = (event) => {
@@ -205,8 +211,7 @@ const FsspParserMainForm = (props) => {
         .catch((error) => {
           console.log(error);
         });
-    }
-    else {
+    } else {
       console.log('task is empty');
     }
   };
@@ -219,12 +224,12 @@ const FsspParserMainForm = (props) => {
   // Effect Hooks ----------------------------------------------------------------------------------------
 
   useEffect(() => {
-    if (resData === null && timerId === null ) {
+    if (resData === null && timerId === null) {
       if (task !== '' && timerId === null) {
         setTimer();
       }
     }
-    if(resData !== null && parsedRes === ""){
+    if (resData !== null && parsedRes === '') {
       responseParser(resData);
     }
   });
@@ -235,32 +240,31 @@ const FsspParserMainForm = (props) => {
     <form {...props}>
       <Card>
         <CardHeader
-          subheader="Введите запрос в формате ФИО 11.11.1950 77"
-          title="Fssp Parser"
+          subheader='Введите запрос в формате ФИО 11.11.1950 77'
+          title='Fssp Parser'
         />
         <Divider />
         <CardContent>
           <TextField
             fullWidth
-            label="query string"
-            name="query string"
+            label='query string'
+            name='query string'
             onChange={onChangeHandler}
             onKeyDown={handleEnterDown}
-            type="text"
+            type='text'
             value={argString}
-            variant="outlined"
+            variant='outlined'
           />
           <Box
             sx={{
               display: 'flex',
               justifyContent: 'flex-start',
-              p: 2
+              p: 2,
             }}>
-             <Button
+            <Button
               onClick={onSubmitHandler}
-              color="primary"
-              variant="contained"
-            >
+              color='primary'
+              variant='contained'>
               Submit
             </Button>
           </Box>
@@ -270,93 +274,72 @@ const FsspParserMainForm = (props) => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-evenly',
-              p: 2
+              p: 2,
             }}>
-            <Typography
-              color="textSecondary"
-              variant="body1"
-            > task: {task}
+            <Typography color='textSecondary' variant='body1'>
+              {' '}
+              task: {task}
             </Typography>
-            <Typography
-              color="textSecondary"
-              variant="body1"
-            >status: {status}
+            <Typography color='textSecondary' variant='body1'>
+              status: {status}
             </Typography>
-            <Typography
-              color="textSecondary"
-              variant="body1"
-            >response: {resData !== null ? 'received' : ''}
+            <Typography color='textSecondary' variant='body1'>
+              response: {resData !== null ? 'received' : ''}
             </Typography>
           </Box>
           <Divider />
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-evenly',
-                p: 2
-              }}>
-              <Button
-              onClick={onGetStatus}
-              color="primary"
-              variant="contained"
-            >
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-evenly',
+              p: 2,
+            }}>
+            <Button onClick={onGetStatus} color='primary' variant='contained'>
               Get Status
             </Button>
-            <Button
-              onClick={onGetResponse}
-              color="primary"
-              variant="contained"
-            >
+            <Button onClick={onGetResponse} color='primary' variant='contained'>
               Manual Request
             </Button>
-             <Button
+            <Button
               onClick={onParseResponse}
-              color="primary"
-              variant="contained"
-              disabled={resData === null ? true : false}
-            >
+              color='primary'
+              variant='contained'
+              disabled={resData === null ? true : false}>
               Manual Parse Response
             </Button>
           </Box>
           <Divider />
           <Box
-              sx={{
-                p: 2
-              }}
-          >
-            {(progress === true)? <LinearProgress />: null}
+            sx={{
+              p: 2,
+            }}>
+            {progress === true ? <LinearProgress /> : null}
           </Box>
           <TextareaAutosize
-            aria-label="response data"
-            color="textSecondary"
+            aria-label='response data'
+            color='textSecondary'
             id={'result'}
             value={parsedRes}
             minRows={10}
-            style={{width:"100%"}}
-            placeholder="Empty"
-            />
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-evenly',
-                p: 2
-              }}
-            >
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={() => onSaveHandler('result')}
-              >
-                Save
-              </Button>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={clearFields}
-              >
-                Clear
-              </Button>
-            </Box>
+            style={{ width: '100%' }}
+            placeholder='Empty'
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-evenly',
+              p: 2,
+            }}>
+            <Button
+              color='primary'
+              variant='contained'
+              onClick={() => onSaveHandler('result')}>
+              Save
+            </Button>
+            <Button color='primary' variant='contained' onClick={clearFields}>
+              Clear
+            </Button>
+          </Box>
         </CardContent>
       </Card>
     </form>

@@ -10,8 +10,7 @@ import {
   Hidden,
   List,
   Typography,
-}
-from '@material-ui/core';
+} from '@material-ui/core';
 import {
   AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
@@ -22,8 +21,7 @@ import {
   UserPlus as UserPlusIcon,
   Users as UsersIcon,
   Tool as ToolIcon,
-}
-from 'react-feather';
+} from 'react-feather';
 import NavItem from './NavItem';
 
 const user = {
@@ -32,7 +30,8 @@ const user = {
   name: 'Admin',
 };
 
-const items = [{
+const items = [
+  {
     href: '/app/dashboard',
     icon: BarChartIcon,
     title: 'Dashboard',
@@ -94,16 +93,14 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-      }}
-    >
+      }}>
       <Box
         sx={{
           alignItems: 'center',
           display: 'flex',
           flexDirection: 'column',
           p: 2,
-        }}
-      >
+        }}>
         <Avatar
           component={RouterLink}
           src={user.avatar}
@@ -122,7 +119,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         </Typography>
       </Box>
       <Divider />
-      <Box sx={{p: 2}}>
+      <Box sx={{ p: 2 }}>
         <List>
           {items.map((item) => (
             <NavItem
@@ -134,14 +131,13 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           ))}
         </List>
       </Box>
-      <Box sx={{flexGrow: 1}} />
+      <Box sx={{ flexGrow: 1 }} />
       <Box
         sx={{
           backgroundColor: 'background.default',
           m: 2,
           p: 2,
-        }}
-      >
+        }}>
         <Typography align='center' gutterBottom variant='h4'>
           Advertisement place
         </Typography>
@@ -153,14 +149,12 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             display: 'flex',
             justifyContent: 'center',
             pt: 2,
-          }}
-        >
+          }}>
           <Button
             color='primary'
             component='a'
             href='https://react-material-kit.devias.io'
-            variant='contained'
-          >
+            variant='contained'>
             Go to
           </Button>
         </Box>
@@ -180,8 +174,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             sx: {
               width: 256,
             },
-          }}
-        >
+          }}>
           {content}
         </Drawer>
       </Hidden>
@@ -196,8 +189,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
               top: 64,
               height: 'calc(100% - 64px)',
             },
-          }}
-        >
+          }}>
           {content}
         </Drawer>
       </Hidden>

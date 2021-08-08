@@ -4,7 +4,7 @@ import {
   Card,
   CardContent,
   Grid,
-  Typography
+  Typography,
 } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
@@ -13,23 +13,12 @@ import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 const TotalCustomers = (props) => (
   <Card {...props}>
     <CardContent>
-      <Grid
-        container
-        spacing={3}
-        sx={{ justifyContent: 'space-between' }}
-      >
+      <Grid container spacing={3} sx={{ justifyContent: 'space-between' }}>
         <Grid item>
-          <Typography
-            color="textSecondary"
-            gutterBottom
-            variant="h6"
-          >
+          <Typography color='textSecondary' gutterBottom variant='h6'>
             TOTAL CUSTOMERS
           </Typography>
-          <Typography
-            color="textPrimary"
-            variant="h3"
-          >
+          <Typography color='textPrimary' variant='h3'>
             1,600
           </Typography>
         </Grid>
@@ -38,9 +27,8 @@ const TotalCustomers = (props) => (
             sx={{
               backgroundColor: green[600],
               height: 56,
-              width: 56
-            }}
-          >
+              width: 56,
+            }}>
             <PeopleIcon />
           </Avatar>
         </Grid>
@@ -49,23 +37,18 @@ const TotalCustomers = (props) => (
         sx={{
           alignItems: 'center',
           display: 'flex',
-          pt: 2
-        }}
-      >
+          pt: 2,
+        }}>
         <ArrowUpwardIcon sx={{ color: green[900] }} />
         <Typography
-          variant="body2"
+          variant='body2'
           sx={{
             color: green[900],
-            mr: 1
-          }}
-        >
+            mr: 1,
+          }}>
           16%
         </Typography>
-        <Typography
-          color="textSecondary"
-          variant="caption"
-        >
+        <Typography color='textSecondary' variant='caption'>
           Since last month
         </Typography>
       </Box>

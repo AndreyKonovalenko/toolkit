@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import CustomTextArea from '../components/CustomTextArea';
 import { createUseStyles, useTheme } from 'react-jss';
 
-
 let useStyles = createUseStyles((theme) => ({
   container: {
     background: theme.colorTertiary,
@@ -48,15 +47,14 @@ const TextSorter = (props) => {
     let myArr = data.split(/\n/g);
     let presentResult = '';
     let pastResult = '';
-    myArr.forEach(function(element) {
+    myArr.forEach(function (element) {
       element = element.replaceAll(/\t/g, ' ');
       let re = /\(/g;
       if (element.search(re) !== -1) {
         if (element !== '') {
           pastResult = pastResult + element + '\n';
         }
-      }
-      else {
+      } else {
         if (element !== '') {
           presentResult = presentResult + element + '\n';
         }

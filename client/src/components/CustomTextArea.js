@@ -1,5 +1,5 @@
 import React from 'react';
-import {createUseStyles, useTheme} from 'react-jss';
+import { createUseStyles, useTheme } from 'react-jss';
 
 let useStyles = createUseStyles((theme) => ({
   textarea: {
@@ -15,7 +15,7 @@ let useStyles = createUseStyles((theme) => ({
 
 const CustomTextArea = (props) => {
   const theme = useTheme();
-  const classes = useStyles({...props, theme});
+  const classes = useStyles({ ...props, theme });
 
   return (
     <textarea
