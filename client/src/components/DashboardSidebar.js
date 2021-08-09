@@ -46,6 +46,11 @@ const items = [
     icon: ToolIcon,
     title: 'FsspParser',
   },
+   {
+    href: '/app/textsorter',
+    icon: ToolIcon,
+    title: 'TextSorter',
+  },
   {
     href: '/app/products',
     icon: ShoppingBagIcon,
