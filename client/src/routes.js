@@ -10,9 +10,10 @@ import NotFound from 'src/pages/NotFound';
 import ProductList from 'src/pages/ProductList';
 import Register from 'src/pages/Register';
 import Settings from 'src/pages/Settings';
-import TextSorter from 'src/pages/TextSorter'
+import TextFormater from 'src/pages/TextFormater';
 
-const routes = [{
+const routes = [
+  {
     path: 'app',
     element: <DashboardLayout />,
     children: [
@@ -20,7 +21,7 @@ const routes = [{
       { path: 'customers', element: <CustomerList /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'fsspparser', element: <FsspParser /> },
-      { path: 'textsorter', element: <TextSorter />},
+      { path: 'textformater', element: <TextFormater /> },
       { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <Settings /> },
       { path: '*', element: <Navigate to='/404' /> },
