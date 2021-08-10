@@ -88,7 +88,7 @@ const TextFormaterCard = () => {
             onClick={() => sortText(textData)}
             color='primary'
             variant='contained'>
-            SORT
+            FORMAT
           </Button>
           <Button onClick={clearFields} color='primary' variant='contained'>
             CLEAR
