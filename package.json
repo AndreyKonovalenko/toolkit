@@ -4,13 +4,14 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm start --prefix client",
-    "client-c9": "REACT_APP_URL=http://react-bereon.c9users.io:8081 npm start --prefix client"
+    "client-c9": "REACT_APP_URL=http://react-bereon.c9users.io:8081 npm start --prefix client",
+    "start": "node server.js ",
+    "server": "nodemon server.js",
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AndreyKonovalenko/toolkit.git"
+    "url": "git+https://github.com/AndreyKonovalenko/toolkit.git",
   },
   "author": "Andrey Konovalenko",
   "license": "MIT",
