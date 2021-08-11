@@ -1,5 +1,6 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const colors = require('colors');
 
 const app = express();
 
@@ -10,4 +11,19 @@ app.get('/', (req, res) => res.send('API Running'));
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Sever started on port ${PORT}`));
+if (PORT === '8080') {
+  PORT = 8081;
+}
+
+app.listen(PORT, () => {
+  const msg = 'Server running on address: '.cyan.bold;
+  console.log(
+    process.env.C9_HOSTNAME == !undefined
+      ? `'C9_HOSTNAME' ${process.env.C9_HOSTNAME} `
+      : 'Server runs on the local machine!'
+  );
+  const hostname = process.env.C9_HOSTNAME
+    ? `${process.env.C9_HOSTNAME}:${PORT}`.yellow.underline
+    : `http://localhost:${PORT}`.yellow.underline;
+  console.log(`${msg}${hostname}`);
+});

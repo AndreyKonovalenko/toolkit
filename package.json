@@ -4,14 +4,18 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "client": "npm start --prefix client",
-    "client-c9": "REACT_APP_URL=http://react-bereon.c9users.io:8081 npm start --prefix client",
+    "client-install": "npm install --prefix client",
     "start": "node server.js ",
     "server": "nodemon server.js",
+    "client-c9": "REACT_APP_URL=http://react-bereon.c9users.io:8081 npm start --prefix client",
+    "client": "npm start --prefix client",
+    "dev-c9": "concurrently \"npm run server\" \"npm run client-c9\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AndreyKonovalenko/toolkit.git",
+    "url": "git+https://github.com/AndreyKonovalenko/toolkit.git"
   },
   "author": "Andrey Konovalenko",
   "license": "MIT",
@@ -22,6 +26,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
     "config": "^3.3.6",
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
