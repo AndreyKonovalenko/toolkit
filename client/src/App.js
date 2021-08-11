@@ -1,21 +1,19 @@
-import React from 'react';
-import TextSorter from './pages/TextSorter';
-import FsspParser from './pages/FsspParser';
-import {Route, Switch, BrowserRouter} from 'react-router-dom';
-import Layout from './components/Layout';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import { useRoutes } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core';
+import GlobalStyles from 'src/components/GlobalStyles';
+import 'src/mixins/chartjs';
+import theme from 'src/theme';
+import routes from 'src/routes';
 
 const App = () => {
-  const routes = (
-    <Switch>
-      <Route path='/' exact component={TextSorter} />
-      <Route path='/textsorter' exact component={TextSorter} />
-      <Route path='/fsspparser' exact component={FsspParser} />
-    </Switch>
-  );
+  const routing = useRoutes(routes);
+
   return (
-    <BrowserRouter>
-      <Layout>{routes}</Layout>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      {routing}
+    </ThemeProvider>
   );
 };
 
