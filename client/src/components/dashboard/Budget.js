@@ -1,6 +1,8 @@
+import axios from 'axios';
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardContent,
   Grid,
@@ -9,6 +11,30 @@ import {
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import MoneyIcon from '@material-ui/icons/Money';
 import { red } from '@material-ui/core/colors';
+
+
+
+// HTTP requests AXIOS --------------------------------------------------------------------------------
+  const getExchangeRate = () => {
+    axios
+      .get("https://rest.coinapi.io/v1/exchangerate/ETH/USD", {
+         headers: {"X-CoinAPI-Key": 'D6A3948D-7D78-431E-920B-B569EF17F04D'},
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  // EVENT HANDLERS ---------------------
+
+
+  const onGetExchangeRateHandler = (event) => {
+    event.preventDefault();
+    getExchangeRate();
+  };
+
 
 const Budget = (props) => (
   <Card sx={{ height: '100%' }} {...props}>
@@ -48,6 +74,19 @@ const Budget = (props) => (
           variant='body2'>
           12%
         </Typography>
+           <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-start',
+              p: 2,
+            }}>
+            <Button
+              onClick={onGetExchangeRateHandler}
+              color='primary'
+              variant='contained'>
+              Submit
+            </Button>
+            </Box>
         <Typography color='textSecondary' variant='caption'>
           Since last month
         </Typography>
