@@ -16,11 +16,23 @@ app.get('/', (req, res) => res.send('API Running'));
 app.use('/api/users', require('./routes/api/users'));
 //app.use('/api/auth', require('./routes/api/auth'));
 
+
+// // Enable CORS for develompent
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE'); // I allowed only needed methods
+  //res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, PATCH, PUT');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
+
 let PORT = process.env.PORT || 5000;
 
-if (PORT === '8080') {
-  PORT = 8081;
-}
+// if (PORT === '8080') {
+//   PORT = 8081;
+// }
 
 app.listen(PORT, () => {
   const msg = 'Server running on address: '.cyan.bold;
