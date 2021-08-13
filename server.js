@@ -7,9 +7,16 @@ const app = express();
 // Connect Database
 connectDB();
 
+// Init Middleware
+app.use(express.json({extended: false}));
+
 app.get('/', (req, res) => res.send('API Running'));
 
-const PORT = process.env.PORT || 5000;
+// Define Routes
+app.use('/api/users', require('./routes/api/users'));
+//app.use('/api/auth', require('./routes/api/auth'));
+
+let PORT = process.env.PORT || 5000;
 
 if (PORT === '8080') {
   PORT = 8081;
@@ -18,7 +25,7 @@ if (PORT === '8080') {
 app.listen(PORT, () => {
   const msg = 'Server running on address: '.cyan.bold;
   console.log(
-    process.env.C9_HOSTNAME == !undefined
+    process.env.C9_HOSTNAME
       ? `'C9_HOSTNAME' ${process.env.C9_HOSTNAME} `
       : 'Server runs on the local machine!'
   );
