@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://admin:Znamenka7@toolkitcluster.00vvr.mongodb.net/ToolkitCluster?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://admin:Znamenka7@toolkitcluster.00vvr.mongodb.net/ToolkitCluster?retryWrites=true&w=majority",
+  "jwtSecret": "ehtereum"
 }
