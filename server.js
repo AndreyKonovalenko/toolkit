@@ -8,14 +8,13 @@ const app = express();
 connectDB();
 
 // Init Middleware
-app.use(express.json({extended: false}));
+app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send('API Running'));
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
-
 
 // // Enable CORS for develompent
 
@@ -27,8 +26,7 @@ app.use((req, res, next) => {
   next();
 });
 
-
-let PORT = process.env.PORT || 5000;
+let PORT = process.env.PORT || 5005;
 
 // if (PORT === '8080') {
 //   PORT = 8081;
