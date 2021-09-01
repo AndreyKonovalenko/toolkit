@@ -33,8 +33,7 @@ const Register = () => {
           <Formik
             initialValues={{
               email: '',
-              firstName: '',
-              lastName: '',
+              name: '',
               password: '',
               policy: false,
             }}
@@ -43,14 +42,15 @@ const Register = () => {
                 .email('Must be a valid email')
                 .max(255)
                 .required('Email is required'),
-              firstName: Yup.string()
+              name: Yup.string()
                 .max(255)
                 .required('First name is required'),
-              lastName: Yup.string().max(255).required('Last name is required'),
               password: Yup.string().max(255).required('password is required'),
               policy: Yup.boolean().oneOf([true], 'This field must be checked'),
             })}
-            onSubmit={() => {
+            onSubmit={(values) => {
+              // Here I should put register server method
+              console.log(values)
               navigate('/app/dashboard', { replace: true });
             }}>
             {({
@@ -75,27 +75,15 @@ const Register = () => {
                   </Typography>
                 </Box>
                 <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
+                  error={Boolean(touched.name && errors.name)}
                   fullWidth
-                  helperText={touched.firstName && errors.firstName}
-                  label='First name'
+                  helperText={touched.name && errors.name}
+                  label='Name'
                   margin='normal'
-                  name='firstName'
+                  name='name'
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.firstName}
-                  variant='outlined'
-                />
-                <TextField
-                  error={Boolean(touched.lastName && errors.lastName)}
-                  fullWidth
-                  helperText={touched.lastName && errors.lastName}
-                  label='Last name'
-                  margin='normal'
-                  name='lastName'
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
+                  value={values.name}
                   variant='outlined'
                 />
                 <TextField
