@@ -2,6 +2,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import axios from '../axios-settings';
 import {
   Box,
   Button,
@@ -48,10 +49,22 @@ const Register = () => {
               password: Yup.string().max(255).required('password is required'),
               policy: Yup.boolean().oneOf([true], 'This field must be checked'),
             })}
-            onSubmit={(values) => {
+            onSubmit = { async (values) => {
               // Here I should put register server method
+              try {
+                const config = {
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
+                }
+                const body = JSON.stringify(values);
+                const res = await axios.post('/api/users', body, config)
+                console.log(res.data);
+              } catch(err) {
+                console.error(err.response.data);
+              }
               console.log(values)
-              navigate('/app/dashboard', { replace: true });
+           //   navigate('/app/dashboard', { replace: true });
             }}>
             {({
               errors,

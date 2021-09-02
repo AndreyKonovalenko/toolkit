@@ -28,9 +28,9 @@ app.use((req, res, next) => {
 
 let PORT = process.env.PORT || 5005;
 
-// if (PORT === '8080') {
-//   PORT = 8081;
-// }
+if (PORT === '8080') {
+  PORT = 8081;
+}
 
 app.listen(PORT, () => {
   const msg = 'Server running on address: '.cyan.bold;
