@@ -3,6 +3,7 @@ const connectDB = require('./config/db');
 const https = require('https');
 const http = require('http');
 const colors = require('colors');
+const cors = require('cors');
 const fs = require('fs');
 
 
@@ -16,11 +17,14 @@ const credentials = {
 
 const app = express();
 
+app.use(cors());
+
 // Connect Database
 connectDB();
 
 // Init Middleware
 app.use(express.json({ extended: false }));
+
 
 app.get('/', (req, res) => res.send('API Running'));
 
@@ -32,9 +36,10 @@ app.use('/api/auth', require('./routes/api/auth'));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Credentials : true');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE'); // I allowed only needed methods
   //res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, PATCH, PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Authorization, Accept');
   next();
 });
 
