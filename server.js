@@ -1,6 +1,18 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const https = require('https');
+const http = require('http');
 const colors = require('colors');
+const fs = require('fs');
+
+
+const key = fs.readFileSync('./sslcert/server.key');
+const cert = fs.readFileSync('./sslcert/server.crt');
+
+const credentials = {
+  key: key,
+  cert: cert
+};
 
 const app = express();
 
@@ -26,13 +38,18 @@ app.use((req, res, next) => {
   next();
 });
 
+
+// http server settings
+
 let PORT = process.env.PORT || 5005;
 
 if (PORT === '8080') {
   PORT = 8081;
 }
 
-app.listen(PORT, () => {
+const httpServer = http.createServer(app);
+
+httpServer.listen(PORT, () => {
   const msg = 'Server running on address: '.cyan.bold;
   console.log(
     process.env.C9_HOSTNAME
@@ -43,4 +60,15 @@ app.listen(PORT, () => {
     ? `${process.env.C9_HOSTNAME}:${PORT}`.yellow.underline
     : `http://localhost:${PORT}`.yellow.underline;
   console.log(`${msg}${hostname}`);
+});
+
+// https sever settings
+
+const httpsPort = 8443;
+const httpsServer = https.createServer(credentials, app);
+
+httpsServer.listen(httpsPort, () => {
+   const msg = 'https server running on address: '.cyan.bold;
+   const hostname = `${process.env.C9_HOSTNAME}:${httpsPort}`.yellow.underline;
+   console.log(`${msg}${hostname}`);
 });
