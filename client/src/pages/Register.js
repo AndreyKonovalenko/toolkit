@@ -1,8 +1,10 @@
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import {useSelector, useDispatch} from 'react-redux';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import axios from '../axios-settings';
+// import axios from '../axios-settings';
+import { register } from '../store/actions/authActions'
 import {
   Box,
   Button,
@@ -13,8 +15,10 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 const Register = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
@@ -50,9 +54,10 @@ const Register = () => {
               policy: Yup.boolean().oneOf([true], 'This field must be checked'),
             })}
             onSubmit = {
+             (values) => {
               //register is authAction
-              register(values)
-            }>
+              dispatch(register(values))
+           }}>
             {({
               errors,
               handleBlur,
@@ -163,5 +168,9 @@ const Register = () => {
     </>
   );
 };
+
+Register.propTypes = {
+  register: PropTypes.func.isRequired
+}
 
 export default Register;
