@@ -7,7 +7,7 @@
     "client-install": "npm install --prefix client",
     "start": "node server.js ",
     "server": "nodemon server.js",
-    "client-c9": "REACT_APP_URL=https://3.141.85.230:8443 npm start --prefix client",
+    "client-c9": "REACT_APP_URL=https://52.14.92.168:8443 npm start --prefix client",
     "client": "npm start --prefix client",
     "dev-c9": "concurrently \"npm run server\" \"npm run client-c9\"",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
@@ -34,7 +34,6 @@
     "gravatar": "^1.8.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.6",
-    "prop-types": "^15.7.2",
     "react-redux": "^7.2.5",
     "request": "^2.88.2"
   },

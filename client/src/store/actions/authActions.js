@@ -4,7 +4,8 @@ import {REGISTER_SUCCESS, REGISTER_FAIL} from './types';
 
 // Register User
 
-export const register = ({values}) => async dispatch => {
+export const register = (values) => async dispatch => {
+  console.log('register works!!!')
   const config = {
     headers: {
       'Content-Type': 'application/json'

@@ -34,14 +34,14 @@ app.use('/api/auth', require('./routes/api/auth'));
 
 // // Enable CORS for develompent
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Credentials : true');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE'); // I allowed only needed methods
-  //res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, PATCH, PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Authorization, Accept');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', '*');
+//   res.setHeader('Access-Control-Allow-Credentials : true');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE'); // I allowed only needed methods
+//   //res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, PATCH, PUT');
+//   res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Authorization, Accept');
+//   next();
+// });
 
 
 // http server settings

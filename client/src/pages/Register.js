@@ -1,5 +1,5 @@
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import {useSelector, useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -15,7 +15,7 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import PropTypes from 'prop-types';
+
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -55,6 +55,7 @@ const Register = () => {
             })}
             onSubmit = {
              (values) => {
+             console.log(values)
               //register is authAction
               dispatch(register(values))
            }}>
@@ -169,8 +170,6 @@ const Register = () => {
   );
 };
 
-Register.propTypes = {
-  register: PropTypes.func.isRequired
-}
+
 
 export default Register;
