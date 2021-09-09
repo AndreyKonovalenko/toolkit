@@ -1,11 +1,12 @@
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import {useSelector, useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 // import axios from '../axios-settings';
 import { register } from '../store/actions/authActions'
 import {
+  Alert,
   Box,
   Button,
   Checkbox,
@@ -18,8 +19,10 @@ import {
 
 
 const Register = () => {
+  const alerts = useSelector(state => state.alert)
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  console.log(alert)
 
   return (
     <>
@@ -35,6 +38,7 @@ const Register = () => {
           justifyContent: 'center',
         }}>
         <Container maxWidth='sm'>
+
           <Formik
             initialValues={{
               email: '',
@@ -73,6 +77,11 @@ const Register = () => {
                   <Typography color='textPrimary' variant='h2'>
                     Create new account
                   </Typography>
+                  {  alerts != null && alerts.length > 0 && alerts.map(element => (
+                      <Alert varina="outlined" severity="error" key={element.id}>
+                     {element.msg}
+                     </Alert>
+                  ))}
                   <Typography
                     color='textSecondary'
                     gutterBottom
