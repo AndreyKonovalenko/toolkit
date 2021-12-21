@@ -111,10 +111,18 @@ const FsspParserMainForm = (props) => {
       })
       .then((res) => {
         const data = res.data.response.result[0].result;
-        setResData(data);
+        // api status model
+        let status = res.data.response.result[0].status;
+        console.log(status);
+        console.log(data);
+       
         clearTimeout(timerId);
+        if (status === 0 || status === 3) {
+            setResData(data);
+            setProgress(false);
+        }
         setTimerId(null);
-        setProgress(false);
+      
       })
       .catch((error) => {
         console.log(error);
