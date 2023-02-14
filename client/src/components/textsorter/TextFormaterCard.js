@@ -1,5 +1,5 @@
-import React from 'react';
-import { useState } from 'react';
+import React from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -9,12 +9,12 @@ import {
   Divider,
   TextareaAutosize,
   Typography,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const TextFormaterCard = () => {
-  const [textData, setTextData] = useState('');
-  const [presentData, setPresentData] = useState('');
-  const [pastData, setPastData] = useState('');
+  const [textData, setTextData] = useState("");
+  const [presentData, setPresentData] = useState("");
+  const [pastData, setPastData] = useState("");
 
   const onSumbmitHandler = (event) => {
     event.preventDefault();
@@ -27,35 +27,42 @@ const TextFormaterCard = () => {
   };
 
   const clearFields = () => {
-    setPresentData('');
-    setPastData('');
-    setTextData('');
+    setPresentData("");
+    setPastData("");
+    setTextData("");
   };
 
   const onSaveHandler = (id) => {
     let copyText = document.getElementById(id);
     copyText.select();
     copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-    document.execCommand('copy');
+    document.execCommand("copy");
   };
 
   const sortText = (data) => {
     let myArr = data.split(/\n/g);
-    let presentResult = '';
-    let pastResult = '';
+    let presentResult = "";
+    let pastResult = "";
+    // myArr.forEach(function (element) {
+    //   element = element.replaceAll(/\t/g, " ");
+    //   let re = /\(/g;
+    //   if (element.search(re) !== -1) {
+    //     if (element !== "") {
+    //       pastResult = pastResult + element + "\n";
+    //       console.log(pastResult);
+    //     }
+    //   } else {
+    //     if (element !== "") {
+    //       presentResult = presentResult + element + "\n";
+    //     }
+    //   }
+    // });
+
     myArr.forEach(function (element) {
-      element = element.replaceAll(/\t/g, ' ');
-      let re = /\(/g;
-      if (element.search(re) !== -1) {
-        if (element !== '') {
-          pastResult = pastResult + element + '\n';
-        }
-      } else {
-        if (element !== '') {
-          presentResult = presentResult + element + '\n';
-        }
-      }
+      element = element.replaceAll(/\t/g, " ");
+      presentResult = presentResult + element + "\n";
     });
+
     setPresentData(presentResult);
     setPastData(pastResult);
   };
@@ -63,89 +70,95 @@ const TextFormaterCard = () => {
   return (
     <Card>
       <CardHeader
-        subheader='Введите текс который нужно отформатировать'
-        title='TextFormater'
+        subheader="Введите текс который нужно отформатировать"
+        title="TextFormater"
       />
       <Divider />
       <CardContent>
         <TextareaAutosize
-          aria-label='input'
-          color='textSecondary'
-          id={'input'}
+          aria-label="input"
+          color="textSecondary"
+          id={"input"}
           value={textData}
           minRows={10}
           onSubmit={onSumbmitHandler}
           onChange={onChangeHandler}
-          style={{ width: '100%' }}
-          placeholder='Empty'
+          style={{ width: "100%" }}
+          placeholder="Empty"
         />
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'space-evenly',
+            display: "flex",
+            justifyContent: "space-evenly",
             p: 2,
-          }}>
+          }}
+        >
           <Button
             onClick={() => sortText(textData)}
-            color='primary'
-            variant='contained'>
+            color="primary"
+            variant="contained"
+          >
             FORMAT
           </Button>
-          <Button onClick={clearFields} color='primary' variant='contained'>
+          <Button onClick={clearFields} color="primary" variant="contained">
             CLEAR
           </Button>
         </Box>
-        <Typography color='textSecondary' variant='body1'>
+        <Typography color="textSecondary" variant="body1">
           Present
         </Typography>
         <TextareaAutosize
-          aria-label='present'
-          color='textSecondary'
-          id={'present'}
+          aria-label="present"
+          color="textSecondary"
+          id={"present"}
           value={presentData}
           minRows={10}
           onSubmit={onSumbmitHandler}
           onChange={onChangeHandler}
-          style={{ width: '100%' }}
-          placeholder='Empty'
+          style={{ width: "100%" }}
+          placeholder="Empty"
         />
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'flex-start',
+            display: "flex",
+            justifyContent: "flex-start",
             p: 2,
-          }}>
+          }}
+        >
           <Button
-            onClick={() => onSaveHandler('present')}
-            color='primary'
-            variant='contained'>
+            onClick={() => onSaveHandler("present")}
+            color="primary"
+            variant="contained"
+          >
             SAVE
           </Button>
         </Box>
-        <Typography color='textSecondary' variant='body1'>
+        <Typography color="textSecondary" variant="body1">
           Past
         </Typography>
         <TextareaAutosize
-          aria-label='past'
-          color='textSecondary'
-          id={'past'}
+          aria-label="past"
+          color="textSecondary"
+          id={"past"}
           value={pastData}
           minRows={10}
           onSubmit={onSumbmitHandler}
           onChange={onChangeHandler}
-          style={{ width: '100%' }}
-          placeholder='Empty'
+          style={{ width: "100%" }}
+          placeholder="Empty"
         />
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'flex-start',
+            display: "flex",
+            justifyContent: "flex-start",
             p: 2,
-          }}>
+          }}
+        >
           <Button
-            onClick={() => onSaveHandler('past')}
-            color='primary'
-            variant='contained'>
+            onClick={() => onSaveHandler("past")}
+            color="primary"
+            variant="contained"
+          >
             SAVE
           </Button>
         </Box>

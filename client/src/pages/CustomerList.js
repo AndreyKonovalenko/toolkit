@@ -8,7 +8,8 @@ import customers from 'src/__mocks__/customers';
 const CustomerList = () => (
   <>
     <Helmet>
-      <title>Customers | Material Kit</title>
+    <meta charSet="utf-8" />
+      <title>Quiz | Examinator</title>
     </Helmet>
     <Box
       sx={{
